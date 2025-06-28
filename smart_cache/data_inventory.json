@@ -1,0 +1,1391 @@
+{
+  "symbols": {
+    "AAVEUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.029578208923339844,
+        "last_updated": "2025-06-28T05:49:17.752827+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.10081100463867188,
+        "last_updated": "2025-06-28T06:18:08.431767+00:00"
+      }
+    },
+    "BTCUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.032176971435546875,
+        "last_updated": "2025-06-28T05:49:17.976256+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.11635017395019531,
+        "last_updated": "2025-06-28T06:18:08.909724+00:00"
+      }
+    },
+    "AIXBTUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.039134979248046875,
+        "last_updated": "2025-06-28T05:49:18.207070+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.13625621795654297,
+        "last_updated": "2025-06-28T06:18:09.570805+00:00"
+      }
+    },
+    "ALGOUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.02968120574951172,
+        "last_updated": "2025-06-28T05:49:18.437436+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.08028793334960938,
+        "last_updated": "2025-06-28T06:18:10.123296+00:00"
+      }
+    },
+    "API3USDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.033980369567871094,
+        "last_updated": "2025-06-28T05:49:18.668203+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.1016693115234375,
+        "last_updated": "2025-06-28T06:18:10.623489+00:00"
+      }
+    },
+    "APTUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.037629127502441406,
+        "last_updated": "2025-06-28T05:49:18.902098+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.1211404800415039,
+        "last_updated": "2025-06-28T06:18:11.144587+00:00"
+      }
+    },
+    "ARUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.030185699462890625,
+        "last_updated": "2025-06-28T05:49:19.133482+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.09329795837402344,
+        "last_updated": "2025-06-28T06:18:11.682136+00:00"
+      }
+    },
+    "ATHUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03646564483642578,
+        "last_updated": "2025-06-28T05:49:19.362417+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.10828208923339844,
+        "last_updated": "2025-06-28T06:18:12.226124+00:00"
+      }
+    },
+    "ATOMUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.02752971649169922,
+        "last_updated": "2025-06-28T05:49:19.593907+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.07991981506347656,
+        "last_updated": "2025-06-28T06:18:12.902050+00:00"
+      }
+    },
+    "AVAXUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.031463623046875,
+        "last_updated": "2025-06-28T05:49:19.824763+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.10474586486816406,
+        "last_updated": "2025-06-28T06:18:13.454352+00:00"
+      }
+    },
+    "BANANAUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.031922340393066406,
+        "last_updated": "2025-06-28T05:49:20.057766+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.107086181640625,
+        "last_updated": "2025-06-28T06:18:14.018665+00:00"
+      }
+    },
+    "BEAMXUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03674888610839844,
+        "last_updated": "2025-06-28T05:49:20.288198+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.11125755310058594,
+        "last_updated": "2025-06-28T06:18:14.543276+00:00"
+      }
+    },
+    "BERAUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.0281219482421875,
+        "last_updated": "2025-06-28T05:49:20.522727+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.08028507232666016,
+        "last_updated": "2025-06-28T06:18:15.067931+00:00"
+      }
+    },
+    "BNBUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.02895641326904297,
+        "last_updated": "2025-06-28T05:49:20.756129+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.09548568725585938,
+        "last_updated": "2025-06-28T06:18:15.616756+00:00"
+      }
+    },
+    "BTCDOMUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.029397964477539062,
+        "last_updated": "2025-06-28T05:49:20.982807+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.09906387329101562,
+        "last_updated": "2025-06-28T06:18:16.154812+00:00"
+      }
+    },
+    "CAKEUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03659534454345703,
+        "last_updated": "2025-06-28T05:49:21.214628+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.11257648468017578,
+        "last_updated": "2025-06-28T06:18:16.682862+00:00"
+      }
+    },
+    "COWUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03356170654296875,
+        "last_updated": "2025-06-28T05:49:21.460513+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.097625732421875,
+        "last_updated": "2025-06-28T06:18:17.274262+00:00"
+      }
+    },
+    "DOGEUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.039099693298339844,
+        "last_updated": "2025-06-28T05:49:21.703253+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.13271617889404297,
+        "last_updated": "2025-06-28T06:18:17.810343+00:00"
+      }
+    },
+    "DYMUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03271770477294922,
+        "last_updated": "2025-06-28T05:49:21.934542+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.09289360046386719,
+        "last_updated": "2025-06-28T06:18:18.337050+00:00"
+      }
+    },
+    "EIGENUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.036484718322753906,
+        "last_updated": "2025-06-28T05:49:22.160989+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.11401176452636719,
+        "last_updated": "2025-06-28T06:18:18.877978+00:00"
+      }
+    },
+    "ENAUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.032787322998046875,
+        "last_updated": "2025-06-28T05:49:22.387966+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.09397602081298828,
+        "last_updated": "2025-06-28T06:18:19.557734+00:00"
+      }
+    },
+    "ETHFIUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.036830902099609375,
+        "last_updated": "2025-06-28T05:49:22.613378+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.11069869995117188,
+        "last_updated": "2025-06-28T06:18:20.753984+00:00"
+      }
+    },
+    "ETHUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.032074928283691406,
+        "last_updated": "2025-06-28T05:49:22.844869+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.1148691177368164,
+        "last_updated": "2025-06-28T06:18:21.431536+00:00"
+      }
+    },
+    "FARTCOINUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.035666465759277344,
+        "last_updated": "2025-06-28T05:49:23.071844+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.11283493041992188,
+        "last_updated": "2025-06-28T06:18:21.959346+00:00"
+      }
+    },
+    "GRASSUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03687000274658203,
+        "last_updated": "2025-06-28T05:49:23.303808+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.12072944641113281,
+        "last_updated": "2025-06-28T06:18:22.478437+00:00"
+      }
+    },
+    "HAEDALUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.04004478454589844,
+        "last_updated": "2025-06-28T05:49:23.530988+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.14840221405029297,
+        "last_updated": "2025-06-28T06:18:23.189904+00:00"
+      }
+    },
+    "HUSDT": {
+      "1h": {
+        "first_timestamp": "2025-06-25T09:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 68,
+        "file_size_mb": 0.007107734680175781,
+        "last_updated": "2025-06-28T05:49:23.956196+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-06-25T09:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 275,
+        "file_size_mb": 0.016271591186523438,
+        "last_updated": "2025-06-28T06:18:23.460802+00:00"
+      }
+    },
+    "HYPEUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-30T10:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 691,
+        "file_size_mb": 0.031569480895996094,
+        "last_updated": "2025-06-28T05:49:24.366420+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-30T10:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2767,
+        "file_size_mb": 0.1070394515991211,
+        "last_updated": "2025-06-28T06:18:25.358971+00:00"
+      }
+    },
+    "INITUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03560447692871094,
+        "last_updated": "2025-06-28T05:49:24.591378+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.11044120788574219,
+        "last_updated": "2025-06-28T06:18:27.271300+00:00"
+      }
+    },
+    "IPUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.040218353271484375,
+        "last_updated": "2025-06-28T05:49:24.829902+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.15050601959228516,
+        "last_updated": "2025-06-28T06:18:27.780899+00:00"
+      }
+    },
+    "JTOUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03700065612792969,
+        "last_updated": "2025-06-28T05:49:25.061752+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.11593437194824219,
+        "last_updated": "2025-06-28T06:18:28.310844+00:00"
+      }
+    },
+    "JUPUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03377246856689453,
+        "last_updated": "2025-06-28T05:49:25.293595+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.09966278076171875,
+        "last_updated": "2025-06-28T06:18:28.849641+00:00"
+      }
+    },
+    "KAITOUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03641986846923828,
+        "last_updated": "2025-06-28T05:49:25.522624+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.11309146881103516,
+        "last_updated": "2025-06-28T06:18:29.510161+00:00"
+      }
+    },
+    "KERNELUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.029302597045898438,
+        "last_updated": "2025-06-28T05:49:25.750441+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.08014774322509766,
+        "last_updated": "2025-06-28T06:18:30.028730+00:00"
+      }
+    },
+    "LAUSDT": {
+      "1h": {
+        "first_timestamp": "2025-06-05T09:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 548,
+        "file_size_mb": 0.0215301513671875,
+        "last_updated": "2025-06-28T05:49:26.172783+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-06-05T09:00:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2197,
+        "file_size_mb": 0.059538841247558594,
+        "last_updated": "2025-06-28T06:18:30.598972+00:00"
+      }
+    },
+    "LAYERUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03513050079345703,
+        "last_updated": "2025-06-28T05:49:26.403105+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.10116100311279297,
+        "last_updated": "2025-06-28T06:18:33.008007+00:00"
+      }
+    },
+    "LDOUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.035076141357421875,
+        "last_updated": "2025-06-28T05:49:26.632915+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.10306549072265625,
+        "last_updated": "2025-06-28T06:18:33.526649+00:00"
+      }
+    },
+    "LISTAUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.030284881591796875,
+        "last_updated": "2025-06-28T05:49:26.859262+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.08265209197998047,
+        "last_updated": "2025-06-28T06:18:34.052929+00:00"
+      }
+    },
+    "LQTYUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03580188751220703,
+        "last_updated": "2025-06-28T05:49:27.094045+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.1180267333984375,
+        "last_updated": "2025-06-28T06:18:34.560915+00:00"
+      }
+    },
+    "LTCUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.027611732482910156,
+        "last_updated": "2025-06-28T05:49:27.327068+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.0839385986328125,
+        "last_updated": "2025-06-28T06:18:35.093544+00:00"
+      }
+    },
+    "MORPHOUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.034842491149902344,
+        "last_updated": "2025-06-28T05:49:27.567303+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.10410690307617188,
+        "last_updated": "2025-06-28T06:18:35.593525+00:00"
+      }
+    },
+    "MOVEUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.02966594696044922,
+        "last_updated": "2025-06-28T05:49:27.800537+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.08083343505859375,
+        "last_updated": "2025-06-28T06:18:36.113845+00:00"
+      }
+    },
+    "NEARUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.026172637939453125,
+        "last_updated": "2025-06-28T05:49:28.033800+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.07587623596191406,
+        "last_updated": "2025-06-28T06:18:36.625756+00:00"
+      }
+    },
+    "OMUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.04020500183105469,
+        "last_updated": "2025-06-28T05:49:28.267810+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.1439495086669922,
+        "last_updated": "2025-06-28T06:18:37.447155+00:00"
+      }
+    },
+    "OPUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.034644126892089844,
+        "last_updated": "2025-06-28T05:49:28.509165+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.1035299301147461,
+        "last_updated": "2025-06-28T06:18:37.945864+00:00"
+      }
+    },
+    "PARTIUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03079509735107422,
+        "last_updated": "2025-06-28T05:49:28.744331+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.08260631561279297,
+        "last_updated": "2025-06-28T06:18:38.788715+00:00"
+      }
+    },
+    "PAXGUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.030608177185058594,
+        "last_updated": "2025-06-28T05:49:28.989778+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.10715389251708984,
+        "last_updated": "2025-06-28T06:18:39.302625+00:00"
+      }
+    },
+    "PENDLEUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.037944793701171875,
+        "last_updated": "2025-06-28T05:49:29.231082+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.12005043029785156,
+        "last_updated": "2025-06-28T06:18:39.796562+00:00"
+      }
+    },
+    "PENGUUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03807258605957031,
+        "last_updated": "2025-06-28T05:49:29.466125+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.11992263793945312,
+        "last_updated": "2025-06-28T06:18:40.471837+00:00"
+      }
+    },
+    "PLUMEUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.02899169921875,
+        "last_updated": "2025-06-28T05:49:29.697171+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.07931995391845703,
+        "last_updated": "2025-06-28T06:18:40.979695+00:00"
+      }
+    },
+    "RAYSOLUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.037342071533203125,
+        "last_updated": "2025-06-28T05:49:29.944652+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.12038993835449219,
+        "last_updated": "2025-06-28T06:18:41.807076+00:00"
+      }
+    },
+    "RESOLVUSDT": {
+      "1h": {
+        "first_timestamp": "2025-06-10T13:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 424,
+        "file_size_mb": 0.02493000030517578,
+        "last_updated": "2025-06-28T05:49:30.367920+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-06-10T13:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 1699,
+        "file_size_mb": 0.08539295196533203,
+        "last_updated": "2025-06-28T06:18:42.291502+00:00"
+      }
+    },
+    "SAHARAUSDT": {
+      "1h": {
+        "first_timestamp": "2025-06-26T12:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 41,
+        "file_size_mb": 0.005766868591308594,
+        "last_updated": "2025-06-28T05:49:30.793594+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-06-26T12:00:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 169,
+        "file_size_mb": 0.011943817138671875,
+        "last_updated": "2025-06-28T06:18:43.626449+00:00"
+      }
+    },
+    "SOLUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.02927684783935547,
+        "last_updated": "2025-06-28T05:49:31.032340+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.09444904327392578,
+        "last_updated": "2025-06-28T06:18:45.223050+00:00"
+      }
+    },
+    "SOLVUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03058338165283203,
+        "last_updated": "2025-06-28T05:49:31.265478+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.083526611328125,
+        "last_updated": "2025-06-28T06:18:45.755488+00:00"
+      }
+    },
+    "SONICUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.031017303466796875,
+        "last_updated": "2025-06-28T05:49:31.495339+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.08372974395751953,
+        "last_updated": "2025-06-28T06:18:46.260655+00:00"
+      }
+    },
+    "SOPHUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.04019641876220703,
+        "last_updated": "2025-06-28T05:49:31.731720+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.14787960052490234,
+        "last_updated": "2025-06-28T06:18:46.779257+00:00"
+      }
+    },
+    "SPKUSDT": {
+      "1h": {
+        "first_timestamp": "2025-06-17T09:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 260,
+        "file_size_mb": 0.016086578369140625,
+        "last_updated": "2025-06-28T05:49:32.165003+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-06-17T09:00:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 1045,
+        "file_size_mb": 0.04767131805419922,
+        "last_updated": "2025-06-28T06:18:47.057014+00:00"
+      }
+    },
+    "STGUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.02730274200439453,
+        "last_updated": "2025-06-28T05:49:32.396849+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.07293033599853516,
+        "last_updated": "2025-06-28T06:18:49.036927+00:00"
+      }
+    },
+    "STXUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.033484458923339844,
+        "last_updated": "2025-06-28T05:49:32.624932+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.10034942626953125,
+        "last_updated": "2025-06-28T06:18:49.534448+00:00"
+      }
+    },
+    "SUIUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.036690711975097656,
+        "last_updated": "2025-06-28T05:49:32.849302+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.12261581420898438,
+        "last_updated": "2025-06-28T06:18:50.018840+00:00"
+      }
+    },
+    "SYRUPUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.039852142333984375,
+        "last_updated": "2025-06-28T05:49:33.083293+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.14652347564697266,
+        "last_updated": "2025-06-28T06:18:50.868397+00:00"
+      }
+    },
+    "TAOUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03069591522216797,
+        "last_updated": "2025-06-28T05:49:33.315443+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.10832405090332031,
+        "last_updated": "2025-06-28T06:18:51.386044+00:00"
+      }
+    },
+    "TIAUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03722667694091797,
+        "last_updated": "2025-06-28T05:49:33.551418+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.12060165405273438,
+        "last_updated": "2025-06-28T06:18:51.918876+00:00"
+      }
+    },
+    "TONUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03678131103515625,
+        "last_updated": "2025-06-28T05:49:33.782203+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.11673545837402344,
+        "last_updated": "2025-06-28T06:18:52.755867+00:00"
+      }
+    },
+    "TRUMPUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.031597137451171875,
+        "last_updated": "2025-06-28T05:49:34.607449+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.09807968139648438,
+        "last_updated": "2025-06-28T06:18:53.301211+00:00"
+      }
+    },
+    "USUALUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.028817176818847656,
+        "last_updated": "2025-06-28T05:49:34.841004+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.0776510238647461,
+        "last_updated": "2025-06-28T06:18:53.811521+00:00"
+      }
+    },
+    "VANAUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03069019317626953,
+        "last_updated": "2025-06-28T05:49:35.076338+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.09534740447998047,
+        "last_updated": "2025-06-28T06:18:54.309796+00:00"
+      }
+    },
+    "VIRTUALUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.036225318908691406,
+        "last_updated": "2025-06-28T05:49:35.307767+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.11989498138427734,
+        "last_updated": "2025-06-28T06:18:54.846186+00:00"
+      }
+    },
+    "WALUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03400421142578125,
+        "last_updated": "2025-06-28T05:49:35.538236+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.09763622283935547,
+        "last_updated": "2025-06-28T06:18:55.369096+00:00"
+      }
+    },
+    "WCTUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.034244537353515625,
+        "last_updated": "2025-06-28T05:49:35.764828+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.10317707061767578,
+        "last_updated": "2025-06-28T06:18:55.879646+00:00"
+      }
+    },
+    "WIFUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.035408973693847656,
+        "last_updated": "2025-06-28T05:49:35.995188+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.10607242584228516,
+        "last_updated": "2025-06-28T06:18:56.403632+00:00"
+      }
+    },
+    "WLDUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.034951210021972656,
+        "last_updated": "2025-06-28T05:49:36.225053+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.10754013061523438,
+        "last_updated": "2025-06-28T06:18:56.918737+00:00"
+      }
+    },
+    "XAIUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03761100769042969,
+        "last_updated": "2025-06-28T05:49:36.455367+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.11837482452392578,
+        "last_updated": "2025-06-28T06:18:57.591263+00:00"
+      }
+    },
+    "XRPUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03591346740722656,
+        "last_updated": "2025-06-28T05:49:36.692880+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.10800743103027344,
+        "last_updated": "2025-06-28T06:18:58.109596+00:00"
+      }
+    },
+    "ZKUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03628826141357422,
+        "last_updated": "2025-06-28T05:49:36.929361+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.1074056625366211,
+        "last_updated": "2025-06-28T06:18:58.962379+00:00"
+      }
+    },
+    "ZROUSDT": {
+      "1h": {
+        "first_timestamp": "2025-05-29T03:00:00+00:00",
+        "last_timestamp": "2025-06-28T04:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T05:00:00+00:00",
+        "row_count": 722,
+        "file_size_mb": 0.03657722473144531,
+        "last_updated": "2025-06-28T05:49:37.162352+00:00"
+      },
+      "15m": {
+        "first_timestamp": "2025-05-29T06:30:00+00:00",
+        "last_timestamp": "2025-06-28T06:00:00+00:00",
+        "last_candle_closes_at": "2025-06-28T06:15:00+00:00",
+        "row_count": 2879,
+        "file_size_mb": 0.1253833770751953,
+        "last_updated": "2025-06-28T06:18:59.475495+00:00"
+      }
+    }
+  },
+  "last_updated": "2025-06-28T06:18:59.482989+00:00"
+}

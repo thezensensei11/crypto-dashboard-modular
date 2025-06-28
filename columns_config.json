@@ -1,0 +1,41 @@
+[
+  {
+    "name": "Beta (14D)",
+    "metric": "beta",
+    "interval": "15m",
+    "lookback_days": 14,
+    "start_date": null,
+    "end_date": null,
+    "params": {},
+    "type": "metric"
+  },
+  {
+    "name": "UBeta (14D)",
+    "metric": "upside_beta",
+    "interval": "15m",
+    "lookback_days": 14,
+    "start_date": null,
+    "end_date": null,
+    "params": {},
+    "type": "metric"
+  },
+  {
+    "name": "DBeta (14D)",
+    "metric": "downside_beta",
+    "interval": "15m",
+    "lookback_days": 14,
+    "start_date": null,
+    "end_date": null,
+    "params": {},
+    "type": "metric"
+  },
+  {
+    "name": "UD",
+    "type": "calculated",
+    "formula": "[UBeta (14D)]/[DBeta (14D)]",
+    "dependencies": [
+      "DBeta (14D)",
+      "UBeta (14D)"
+    ]
+  }
+]
