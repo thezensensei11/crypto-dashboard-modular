@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 """
-Fix Event deserialization error and clear bad messages
-Run this: python fix_event_error.py
+Complete system status check
+Save as: check_status.py
+Run with: python3 check_status.py
 """
 
 import redis
+import psutil
+import os
+from datetime import datetime
 from pathlib import Path
-import json
 
 # Colors
 GREEN = '\033[92m'
@@ -17,201 +20,209 @@ RESET = '\033[0m'
 BOLD = '\033[1m'
 
 
-def check_redis_messages():
-    """Check what's in Redis streams"""
-    print(f"\n{BOLD}Checking Redis streams...{RESET}")
+def check_processes():
+    """Check running processes"""
+    print(f"\n{BOLD}1. Running Processes:{RESET}")
+    print("-" * 50)
+    
+    processes = {
+        'processor': False,
+        'websocket': False,
+        'rest': False,
+        'redis': False
+    }
+    
+    for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
+        try:
+            cmdline = ' '.join(proc.info['cmdline'] or [])
+            
+            if 'redis-server' in cmdline:
+                processes['redis'] = proc.info['pid']
+            elif 'run_processor.py' in cmdline:
+                processes['processor'] = proc.info['pid']
+            elif 'run_collector.py websocket' in cmdline:
+                processes['websocket'] = proc.info['pid']
+            elif 'run_collector.py rest' in cmdline:
+                processes['rest'] = proc.info['pid']
+                
+        except (psutil.NoSuchProcess, psutil.AccessDenied):
+            pass
+    
+    # Display status
+    for name, pid in processes.items():
+        if pid:
+            print(f"{GREEN}✓ {name:12} running (PID: {pid}){RESET}")
+        else:
+            print(f"{RED}✗ {name:12} not running{RESET}")
+    
+    return processes
+
+
+def check_redis():
+    """Check Redis status and contents"""
+    print(f"\n{BOLD}2. Redis Status:{RESET}")
+    print("-" * 50)
     
     try:
         r = redis.Redis(host='localhost', port=6379, decode_responses=True)
+        r.ping()
+        print(f"{GREEN}✓ Redis connected{RESET}")
         
-        # Check for existing streams
-        streams = [
-            "crypto:stream:price.update",
-            "crypto:stream:candle.closed", 
-            "crypto:stream:historical.data"
-        ]
-        
-        for stream in streams:
-            try:
-                # Get stream length
-                length = r.xlen(stream)
-                print(f"\n{BLUE}{stream}: {length} messages{RESET}")
-                
-                if length > 0:
-                    # Get first message to see format
-                    messages = r.xrange(stream, count=1)
-                    if messages:
-                        msg_id, data = messages[0]
-                        print(f"  First message ID: {msg_id}")
-                        print(f"  Data keys: {list(data.keys())}")
-                        if 'data' in data:
-                            print(f"  Data content preview: {data['data'][:100]}...")
-            except:
-                print(f"  {YELLOW}Stream doesn't exist yet{RESET}")
-                
-    except Exception as e:
-        print(f"{RED}Redis connection error: {e}{RESET}")
-        return False
-    
-    return True
-
-
-def fix_event_class():
-    """Fix the Event.from_dict method"""
-    print(f"\n{BOLD}Fixing Event.from_dict method...{RESET}")
-    
-    models_file = Path("core/models.py")
-    if not models_file.exists():
-        print(f"{RED}core/models.py not found!{RESET}")
-        return False
-    
-    with open(models_file, 'r') as f:
-        content = f.read()
-    
-    # Check if from_dict method exists and needs fixing
-    if '@classmethod\n    def from_dict(cls, data: Dict) -> \'Event\':' in content:
-        print(f"{GREEN}✓ from_dict method found{RESET}")
-        
-        # Check if it's handling the Redis format correctly
-        # The issue might be that Redis returns strings, not the original types
-        
-        # Find and fix the from_dict method
-        lines = content.split('\n')
-        new_lines = []
-        in_from_dict = False
-        method_fixed = False
-        
-        for i, line in enumerate(lines):
-            if 'def from_dict(cls, data: Dict)' in line:
-                in_from_dict = True
-                new_lines.append(line)
-                # Add better error handling
-                new_lines.append('        """Create from dictionary with better error handling"""')
-                new_lines.append('        try:')
-                new_lines.append('            # Handle both direct dict and JSON string in data field')
-                new_lines.append('            if isinstance(data.get("data"), str):')
-                new_lines.append('                try:')
-                new_lines.append('                    data["data"] = json.loads(data["data"])')
-                new_lines.append('                except:')
-                new_lines.append('                    pass  # Keep as string if not JSON')
-                new_lines.append('            ')
-                new_lines.append('            # Parse event type')
-                new_lines.append('            event_type = data.get("type", "")')
-                new_lines.append('            if isinstance(event_type, str) and not event_type.startswith("EventType."):')
-                new_lines.append('                event_type = EventType(event_type)')
-                new_lines.append('            elif isinstance(event_type, str):')
-                new_lines.append('                event_type = EventType(event_type.replace("EventType.", ""))')
-                new_lines.append('            ')
-                new_lines.append('            return cls(')
-                new_lines.append('                id=data["id"],')
-                new_lines.append('                type=event_type,')
-                new_lines.append('                timestamp=datetime.fromisoformat(data["timestamp"]),')
-                new_lines.append('                source=data["source"],')
-                new_lines.append('                data=data.get("data", {}),')
-                new_lines.append('                metadata=data.get("metadata")')
-                new_lines.append('            )')
-                new_lines.append('        except Exception as e:')
-                new_lines.append('            raise ValueError(f"Failed to deserialize Event: {e} - Data: {data}")')
-                method_fixed = True
-                
-                # Skip the original method implementation
-                j = i + 1
-                indent_level = len(line) - len(line.lstrip())
-                while j < len(lines) and (lines[j].startswith(' ' * (indent_level + 4)) or not lines[j].strip()):
-                    j += 1
-                
-                # Skip lines we're replacing
-                for k in range(i + 1, j):
-                    lines[k] = None
-                    
-            elif line is not None:
-                new_lines.append(line)
-        
-        if method_fixed:
-            # Write back
-            final_content = '\n'.join([l for l in new_lines if l is not None])
-            
-            # Ensure json is imported
-            if 'import json' not in final_content:
-                import_lines = final_content.split('\n')
-                for i, line in enumerate(import_lines):
-                    if 'import' in line and i < 20:
-                        continue
-                    else:
-                        import_lines.insert(i, 'import json')
-                        break
-                final_content = '\n'.join(import_lines)
-            
-            with open(models_file, 'w') as f:
-                f.write(final_content)
-            
-            print(f"{GREEN}✓ Fixed Event.from_dict method{RESET}")
-            return True
-            
-    else:
-        print(f"{YELLOW}from_dict method not found or different format{RESET}")
-    
-    return False
-
-
-def clear_bad_messages():
-    """Clear existing messages from Redis streams"""
-    print(f"\n{BOLD}Clearing bad messages from Redis...{RESET}")
-    
-    response = input(f"{YELLOW}Clear all existing messages from Redis streams? (y/n): {RESET}")
-    if response.lower() != 'y':
-        print("Skipping message clearing")
-        return
-    
-    try:
-        r = redis.Redis(host='localhost', port=6379, decode_responses=True)
-        
+        # Check streams
         streams = [
             "crypto:stream:price.update",
             "crypto:stream:candle.closed",
             "crypto:stream:historical.data"
         ]
         
+        total_messages = 0
         for stream in streams:
             try:
-                # Delete the stream
-                r.delete(stream)
-                print(f"{GREEN}✓ Cleared {stream}{RESET}")
-            except:
-                pass
+                length = r.xlen(stream)
+                total_messages += length
                 
-        print(f"{GREEN}✓ All streams cleared{RESET}")
+                # Get latest message
+                latest_msg = None
+                if length > 0:
+                    messages = r.xrevrange(stream, count=1)
+                    if messages:
+                        msg_id = messages[0][0]
+                        timestamp = int(msg_id.split('-')[0]) / 1000
+                        age = (datetime.now().timestamp() - timestamp)
+                        
+                        if age < 60:
+                            status = f"{GREEN}active ({int(age)}s ago){RESET}"
+                        elif age < 300:
+                            status = f"{YELLOW}recent ({int(age/60)}m ago){RESET}"
+                        else:
+                            status = f"{RED}stale ({int(age/3600)}h ago){RESET}"
+                        
+                        print(f"  {stream.split(':')[-1]:20} {length:6} msgs  {status}")
+                else:
+                    print(f"  {stream.split(':')[-1]:20} {length:6} msgs  {YELLOW}empty{RESET}")
+                    
+            except Exception as e:
+                print(f"  {stream.split(':')[-1]:20} {RED}error: {e}{RESET}")
+        
+        print(f"\n  Total messages: {total_messages}")
         
     except Exception as e:
-        print(f"{RED}Failed to clear messages: {e}{RESET}")
+        print(f"{RED}✗ Redis error: {e}{RESET}")
+        return False
+    
+    return True
+
+
+def check_duckdb():
+    """Check DuckDB status"""
+    print(f"\n{BOLD}3. DuckDB Status:{RESET}")
+    print("-" * 50)
+    
+    db_path = Path("crypto_data.duckdb")
+    
+    if db_path.exists():
+        size_mb = db_path.stat().st_size / (1024 * 1024)
+        print(f"{GREEN}✓ Database exists ({size_mb:.1f} MB){RESET}")
+        
+        # Check for locks
+        try:
+            import duckdb
+            conn = duckdb.connect(str(db_path), read_only=True)
+            
+            # Get table info
+            tables = conn.execute("SHOW TABLES").fetchall()
+            print(f"  Tables: {[t[0] for t in tables]}")
+            
+            # Get row counts for OHLCV tables
+            for table in tables:
+                if table[0].startswith('ohlcv_'):
+                    count = conn.execute(f"SELECT COUNT(*) FROM {table[0]}").fetchone()[0]
+                    print(f"  {table[0]}: {count:,} rows")
+            
+            conn.close()
+            print(f"{GREEN}  No lock issues{RESET}")
+            
+        except Exception as e:
+            print(f"{RED}  Database locked or error: {e}{RESET}")
+            
+            # Find process holding lock
+            for proc in psutil.process_iter(['pid', 'name']):
+                try:
+                    for file in proc.open_files():
+                        if 'crypto_data.duckdb' in file.path:
+                            print(f"{YELLOW}  Locked by: {proc.info['name']} (PID: {proc.info['pid']}){RESET}")
+                except:
+                    pass
+    else:
+        print(f"{YELLOW}✗ Database does not exist yet{RESET}")
+
+
+def check_last_error():
+    """Check for recent errors in logs"""
+    print(f"\n{BOLD}4. Recent Errors:{RESET}")
+    print("-" * 50)
+    
+    log_file = Path("processor_debug.log")
+    if log_file.exists():
+        with open(log_file, 'r') as f:
+            lines = f.readlines()
+            
+        errors = [l for l in lines[-100:] if 'ERROR' in l]
+        if errors:
+            print(f"{RED}Found {len(errors)} errors in last 100 log lines:{RESET}")
+            for error in errors[-3:]:  # Show last 3 errors
+                print(f"  {error.strip()}")
+        else:
+            print(f"{GREEN}No recent errors in logs{RESET}")
+    else:
+        print(f"{YELLOW}No debug log file found{RESET}")
+
+
+def show_recommendations(processes):
+    """Show recommendations based on status"""
+    print(f"\n{BOLD}5. Recommendations:{RESET}")
+    print("-" * 50)
+    
+    if not processes['redis']:
+        print(f"{RED}1. Start Redis first:{RESET}")
+        print(f"   redis-server")
+    
+    if not processes['processor']:
+        print(f"{YELLOW}2. Start the data processor:{RESET}")
+        print(f"   python3 run_processor_fixed.py  # (with format fix)")
+        print(f"   # or")
+        print(f"   python3 scripts/run_processor.py")
+    
+    if not processes['websocket']:
+        print(f"{YELLOW}3. Start the WebSocket collector:{RESET}")
+        print(f"   python3 scripts/run_collector.py websocket")
+    
+    if not processes['rest']:
+        print(f"{BLUE}4. (Optional) Start the REST collector:{RESET}")
+        print(f"   python3 scripts/run_collector.py rest")
+    
+    if all(processes.values()):
+        print(f"{GREEN}✓ All services are running!{RESET}")
+        print(f"\nMonitor progress with:")
+        print(f"   python3 monitor_progress.py")
 
 
 def main():
-    print(f"{BOLD}{BLUE}{'=' * 60}{RESET}")
-    print(f"{BOLD}{BLUE}{'Fix Event Deserialization Error'.center(60)}{RESET}")
-    print(f"{BOLD}{BLUE}{'=' * 60}{RESET}")
+    """Main status check"""
+    print(f"{BOLD}=== Crypto Dashboard System Status ==={RESET}")
+    print(f"Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     
-    # Check what's in Redis
-    check_redis_messages()
+    # Run checks
+    processes = check_processes()
+    check_redis()
+    check_duckdb()
+    check_last_error()
+    show_recommendations(processes)
     
-    # Fix the Event class
-    if fix_event_class():
-        print(f"\n{GREEN}✓ Event class fixed{RESET}")
-    
-    # Offer to clear bad messages
-    clear_bad_messages()
-    
-    print(f"\n{GREEN}{'=' * 60}{RESET}")
-    print(f"{GREEN}✅ Fixes applied!{RESET}")
-    print(f"{GREEN}{'=' * 60}{RESET}")
-    
-    print(f"\n{BOLD}Now try running the processor again:{RESET}")
-    print(f"   {GREEN}python scripts/run_processor.py{RESET}")
-    
-    print(f"\n{BOLD}If it still fails, you can:{RESET}")
-    print("1. Clear all Redis data: redis-cli FLUSHALL")
-    print("2. Start fresh with the websocket collector first")
-    print("3. Check the exact error message for more details")
+    print(f"\n{BOLD}Quick Commands:{RESET}")
+    print(f"  Kill DuckDB lock:  pkill -f crypto_data.duckdb")
+    print(f"  Clear Redis:       redis-cli FLUSHALL")
+    print(f"  Stop all:          pkill -f crypto-dashboard-modular")
 
 
 if __name__ == "__main__":

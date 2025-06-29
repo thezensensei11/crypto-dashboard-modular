@@ -1,48 +1,36 @@
 #!/bin/bash
-# Final fix for all datetime/timezone import issues
-# Save as: fix_all_timezone.sh and run: bash fix_all_timezone.sh
+# Script to fix DuckDB lock issue
 
-echo "Fixing all timezone imports..."
+echo "=== Fixing DuckDB Lock Issue ==="
+echo
 
-# List of all Python files that might use datetime
-files=(
-    "infrastructure/processors/data_processor.py"
-    "infrastructure/collectors/websocket.py"
-    "infrastructure/collectors/rest.py"
-    "infrastructure/database/manager.py"
-    "infrastructure/scheduler/tasks.py"
-    "infrastructure/message_bus/bus.py"
-    "scripts/run_processor.py"
-    "scripts/run_collector.py"
-    "scripts/test_infrastructure.py"
-    "scripts/migrate_data.py"
-    "core/models.py"
-)
+# 1. Find and kill the process holding the lock
+echo "1. Looking for Python processes with PID 29885..."
+ps aux | grep 29885 | grep -v grep
 
-# Fix each file
-for file in "${files[@]}"; do
-    if [ -f "$file" ]; then
-        # Check if file uses timezone
-        if grep -q "timezone.utc\|timezone(" "$file"; then
-            # Check if timezone is imported
-            if ! grep -q "from datetime import.*timezone" "$file"; then
-                echo "Fixing $file..."
-                # Add timezone to datetime imports
-                sed -i '' 's/from datetime import \(.*\)$/from datetime import \1, timezone/' "$file"
-                # Remove duplicate timezone if added twice
-                sed -i '' 's/, timezone, timezone/, timezone/' "$file"
-            fi
-        fi
-        
-        # Fix deprecated utcnow()
-        if grep -q "datetime.utcnow()" "$file"; then
-            echo "Fixing utcnow() in $file..."
-            sed -i '' 's/datetime.utcnow()/datetime.now(timezone.utc)/g' "$file"
-        fi
-    fi
-done
+echo
+echo "2. Killing the process holding the DuckDB lock..."
+kill -9 29885
 
-echo "✅ All timezone imports fixed!"
-echo ""
-echo "Now try running the processor again:"
-echo "python scripts/run_processor.py"
+# Wait a moment
+sleep 1
+
+# 2. Check if it's killed
+if ps -p 29885 > /dev/null 2>&1; then
+    echo "   ⚠️  Process still running, trying sudo..."
+    sudo kill -9 29885
+else
+    echo "   ✓ Process killed successfully"
+fi
+
+echo
+echo "3. Looking for any other Python processes that might be using crypto_data.duckdb..."
+lsof | grep crypto_data.duckdb 2>/dev/null || echo "   No other processes found using the database"
+
+echo
+echo "4. Alternative: Kill all Python processes accessing the project..."
+echo "   Run this if needed: pkill -f 'crypto-dashboard-modular'"
+
+echo
+echo "✅ DuckDB lock should be cleared. You can now run:"
+echo "   python3 scripts/run_processor.py"

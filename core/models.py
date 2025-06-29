@@ -9,6 +9,7 @@ Place in: crypto-dashboard/core/models.py
 
 from datetime import datetime
 from typing import Optional, List, Dict, Any
+import json
 from decimal import Decimal
 from enum import Enum
 from pydantic import BaseModel, Field, validator
@@ -161,6 +162,55 @@ class Event(BaseModel):
         }
 
 
+
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any]) -> 'Event':
+        """Create Event from dictionary (deserialize from Redis)"""
+        try:
+            # Handle the case where 'data' field might be JSON string
+            event_data = data.get('data', {})
+            if isinstance(event_data, str):
+                try:
+                    event_data = json.loads(event_data)
+                except json.JSONDecodeError:
+                    # If it's not valid JSON, treat as a simple string
+                    event_data = {'value': event_data}
+            
+            # Handle metadata field
+            metadata = data.get('metadata')
+            if isinstance(metadata, str) and metadata:
+                try:
+                    metadata = json.loads(metadata)
+                except json.JSONDecodeError:
+                    metadata = None
+            
+            # Parse EventType
+            event_type = data.get('type', '')
+            if isinstance(event_type, str):
+                # Remove any EventType. prefix if present
+                event_type = event_type.replace('EventType.', '')
+                from core.models import EventType
+                event_type = EventType(event_type)
+            
+            # Parse timestamp
+            timestamp = data.get('timestamp')
+            if isinstance(timestamp, str):
+                timestamp = datetime.fromisoformat(timestamp)
+            
+            return cls(
+                id=data['id'],
+                type=event_type,
+                timestamp=timestamp,
+                source=data['source'],
+                data=event_data,
+                metadata=metadata
+            )
+        except Exception as e:
+            # Log the error with full context for debugging
+            import logging
+            logging.error(f"Failed to deserialize Event: {e}")
+            logging.error(f"Data received: {data}")
+            raise ValueError(f"Failed to deserialize Event: {e}")
 class BatchData(BaseModel):
     """Batch of OHLCV data"""
     symbol: str

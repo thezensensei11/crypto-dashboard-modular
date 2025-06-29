@@ -264,18 +264,6 @@ class DataProcessor:
         """Process incoming events"""
         try:
             self._stats.increment('processed_count')
-
-            # PATCHED: Handle double-encoded data
-            # Check if event.data is a string (double-encoded)
-            if isinstance(event.data, str):
-                try:
-                    import json
-                    event.data = json.loads(event.data)
-                except:
-                    logger.error(f"Failed to parse event.data as JSON")
-                    self._stats.increment('error_count')
-                    return
-
             
             if event.type == EventType.HISTORICAL_DATA:
                 await self._process_historical_data(event)
