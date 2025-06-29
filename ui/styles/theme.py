@@ -1,19 +1,19 @@
 """
-Theme and styling for the dashboard - Updated with white headers and consistent alignment
+Theme and styling for the dashboard - Original colors with JetBrains Mono font
 """
 
-from config.constants import COLORS
+from crypto_dashboard_modular.config.constants import COLORS
 
 def get_dashboard_css() -> str:
     """Get the complete CSS theme for the dashboard"""
     return f"""
     <style>
-        /* Import Inter font (similar to Claude) */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+        /* Import JetBrains Mono font */
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
         
         /* Global font and size adjustments */
         html, body, [class*="css"] {{
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: 'JetBrains Mono', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             font-size: 14px;
         }}
         
@@ -23,27 +23,14 @@ def get_dashboard_css() -> str:
             color: {COLORS['text']};
         }}
         
-        /* Reduce top padding */
+        /* Reduce top padding since no title */
         .main .block-container {{
-            padding-top: 1rem !important;
+            padding-top: 2rem !important;
             padding-bottom: 2rem;
             max-width: 95%;
         }}
         
-        /* Main title styling - reduced margins */
-        .main h1 {{
-            text-align: center !important;
-            margin-top: -10px !important;
-            margin-bottom: 10px !important;
-            font-size: 32px !important;
-            font-weight: 600 !important;
-            background: linear-gradient(90deg, {COLORS['primary']}, {COLORS['primary_dark']});
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }}
-        
-        /* Tab styling - reduced height and spacing */
+        /* Tab styling */
         .stTabs {{
             margin-top: -10px !important;
         }}
@@ -85,6 +72,8 @@ def get_dashboard_css() -> str:
             padding-top: 1rem;
         }}
         
+       
+
         /* Sidebar live prices - custom styling */
         .price-container {{
             background: linear-gradient(135deg, {COLORS['background_light']} 0%, #151515 100%);
@@ -93,6 +82,7 @@ def get_dashboard_css() -> str:
             padding: 12px;
             margin-bottom: 12px;
             transition: all 0.3s;
+            font-family: 'JetBrains Mono', monospace !important;
         }}
         
         .price-container:hover {{
@@ -105,16 +95,24 @@ def get_dashboard_css() -> str:
             color: {COLORS['text_muted']};
             font-weight: 500;
             margin-bottom: 4px;
+            font-family: 'JetBrains Mono', monospace !important;
+            letter-spacing: 0.5px;
         }}
         
         .price-value {{
             font-size: 20px !important;
             font-weight: 600;
             margin-bottom: 0;
+            font-family: 'JetBrains Mono', monospace !important;
+            letter-spacing: -0.5px;
         }}
         
         .price-btc {{
             color: #f7931a;
+        }}
+        
+        .price-eth {{
+            color: #627eea;
         }}
         
         .price-sol {{
@@ -124,6 +122,8 @@ def get_dashboard_css() -> str:
         .price-hype {{
             color: {COLORS['primary']};
         }}
+        
+        
         
         /* Sidebar specific font adjustments */
         section[data-testid="stSidebar"] p,

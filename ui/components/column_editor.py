@@ -7,9 +7,9 @@ from datetime import datetime, timedelta
 from typing import List, Dict, Any
 import logging
 
-from config import METRIC_TYPES, INTERVALS, DEFAULT_INTERVAL
-from data.models import MetricConfig, CalculatedColumn
-from utils.validators import validate_formula, extract_dependencies, validate_metric_name
+from crypto_dashboard_modular.config import METRIC_TYPES, INTERVALS, DEFAULT_INTERVAL
+from crypto_dashboard_modular.data.models import MetricConfig, CalculatedColumn
+from crypto_dashboard_modular.utils.validators import validate_formula, extract_dependencies, validate_metric_name
 
 logger = logging.getLogger(__name__)
 

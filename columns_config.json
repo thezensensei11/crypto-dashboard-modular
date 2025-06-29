@@ -37,5 +37,35 @@
       "DBeta (14D)",
       "UBeta (14D)"
     ]
+  },
+  {
+    "name": "x",
+    "metric": "beta",
+    "interval": "4h",
+    "lookback_days": 30,
+    "start_date": null,
+    "end_date": null,
+    "params": {},
+    "type": "metric"
+  },
+  {
+    "name": "bet1hh",
+    "metric": "beta",
+    "interval": "1h",
+    "lookback_days": 30,
+    "start_date": null,
+    "end_date": null,
+    "params": {},
+    "type": "metric"
+  },
+  {
+    "name": "1d",
+    "metric": "beta",
+    "interval": "1d",
+    "lookback_days": 30,
+    "start_date": null,
+    "end_date": null,
+    "params": {},
+    "type": "metric"
   }
 ]

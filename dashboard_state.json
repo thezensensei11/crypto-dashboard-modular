@@ -14,6 +14,7 @@
     "BERAUSDT",
     "BNBUSDT",
     "BTCDOMUSDT",
+    "BTCUSDT",
     "CAKEUSDT",
     "COWUSDT",
     "DOGEUSDT",
@@ -116,8 +117,38 @@
         "DBeta (14D)",
         "UBeta (14D)"
       ]
+    },
+    {
+      "name": "x",
+      "metric": "beta",
+      "interval": "4h",
+      "lookback_days": 30,
+      "start_date": null,
+      "end_date": null,
+      "params": {},
+      "type": "metric"
+    },
+    {
+      "name": "bet1hh",
+      "metric": "beta",
+      "interval": "1h",
+      "lookback_days": 30,
+      "start_date": null,
+      "end_date": null,
+      "params": {},
+      "type": "metric"
+    },
+    {
+      "name": "1d",
+      "metric": "beta",
+      "interval": "1d",
+      "lookback_days": 30,
+      "start_date": null,
+      "end_date": null,
+      "params": {},
+      "type": "metric"
     }
   ],
-  "last_refresh": null,
-  "saved_at": "2025-06-28T10:43:37.534069"
+  "last_refresh": "2025-06-29T17:01:11.622270",
+  "saved_at": "2025-06-29T17:01:11.622426"
 }

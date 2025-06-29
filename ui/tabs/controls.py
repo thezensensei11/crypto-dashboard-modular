@@ -7,8 +7,8 @@ import os
 from datetime import datetime
 import logging
 
-from config import Settings
-from utils.formatting import format_duration
+from crypto_dashboard_modular.config import Settings
+from crypto_dashboard_modular.utils.formatting import format_duration
 
 logger = logging.getLogger(__name__)
 

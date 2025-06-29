@@ -6,8 +6,15 @@ import streamlit as st
 from typing import List
 import logging
 
-from config import Settings, POPULAR_SYMBOLS
-from data.collector import BinanceDataCollector
+from crypto_dashboard_modular.config import Settings, POPULAR_SYMBOLS
+# Temporary fix
+try:
+    from crypto_dashboard_modular.data.duckdb_collector import BinanceDataCollector
+except ImportError:
+    # Fallback
+    class BinanceDataCollector:
+        def __init__(self, **kwargs):
+            pass
 
 logger = logging.getLogger(__name__)
 

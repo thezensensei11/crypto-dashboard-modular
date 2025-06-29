@@ -1,13 +1,13 @@
 """
-Universe Manager Tab
+Universe Manager Tab - Clean version without emojis
 """
 
 import streamlit as st
 from typing import List
 import logging
 
-from config import Settings, POPULAR_SYMBOLS
-from data.collector import BinanceDataCollector
+from crypto_dashboard_modular.config import Settings, POPULAR_SYMBOLS
+from data.duckdb_collector import BinanceDataCollector
 
 logger = logging.getLogger(__name__)
 
@@ -86,7 +86,7 @@ class UniverseTab:
         universe = st.session_state.universe
         
         if universe:
-            search = st.text_input("🔍 Search symbols", placeholder="Type to filter...")
+            search = st.text_input("Search symbols", placeholder="Type to filter...")
             
             displayed_symbols = universe
             if search:

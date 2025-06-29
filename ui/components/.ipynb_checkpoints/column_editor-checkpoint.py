@@ -1,5 +1,5 @@
 """
-Column configuration editor component
+Column configuration editor component - Clean version without emojis
 """
 
 import streamlit as st
@@ -7,9 +7,9 @@ from datetime import datetime, timedelta
 from typing import List, Dict, Any
 import logging
 
-from config import METRIC_TYPES, INTERVALS, DEFAULT_INTERVAL
-from data.models import MetricConfig, CalculatedColumn
-from utils.validators import validate_formula, extract_dependencies, validate_metric_name
+from crypto_dashboard_modular.config import METRIC_TYPES, INTERVALS, DEFAULT_INTERVAL
+from crypto_dashboard_modular.data.models import MetricConfig, CalculatedColumn
+from crypto_dashboard_modular.utils.validators import validate_formula, extract_dependencies, validate_metric_name
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +22,7 @@ class ColumnEditor:
     def render(self):
         """Render the column editor"""
         with st.expander("Add New Column", expanded=False):
-            tab1, tab2 = st.tabs(["📊 Metric Column", "🧮 Calculated Column"])
+            tab1, tab2 = st.tabs(["Metric Column", "Calculated Column"])
             
             with tab1:
                 self._render_metric_column_editor()
@@ -88,7 +88,6 @@ class ColumnEditor:
                     )
                 lookback_days = None
             
-            # Additional parameters
             st.write("Additional Parameters")
             params = {}
             if metric_type in ['sharpe_ratio', 'sortino_ratio']:
@@ -104,13 +103,11 @@ class ColumnEditor:
             st.write("")  # Even more spacing
             
             if st.button("**Add Metric Column**", type="primary", use_container_width=True):
-                # Validate name
                 is_valid, error_msg = validate_metric_name(column_name)
                 if not is_valid:
                     st.error(error_msg)
                     return
                 
-                # Create metric config
                 metric_config = MetricConfig(
                     name=column_name,
                     metric=metric_type,
@@ -122,7 +119,6 @@ class ColumnEditor:
                     type='metric'
                 )
                 
-                # Add to configuration
                 st.session_state.columns_config.append(metric_config.to_dict())
                 self.settings.save_columns(st.session_state.columns_config)
                 st.success(f"Added metric column: {column_name}")
@@ -141,14 +137,12 @@ class ColumnEditor:
                 key="calc_name"
             )
             
-            # Get available columns
             existing_columns = [col['name'] for col in st.session_state.columns_config]
             
             if not existing_columns:
                 st.warning("Add some metric columns first to use in calculations")
                 return
             
-            # Formula builder
             st.subheader("Formula Builder")
             
             formula = st.text_area(
@@ -159,7 +153,6 @@ class ColumnEditor:
                 key="calc_formula"
             )
             
-            # Show available columns
             st.write("**Available columns:**")
             cols_display = ", ".join([f"[{col}]" for col in existing_columns])
             st.info(cols_display)
@@ -168,18 +161,16 @@ class ColumnEditor:
             st.write("**Formula Preview**")
             
             if formula:
-                # Show formula with highlighted column names
                 preview = formula
                 for col in existing_columns:
                     preview = preview.replace(f"[{col}]", f"**{col}**")
                 st.markdown(f"Formula: {preview}")
                 
-                # Validate formula
                 is_valid, error_msg = validate_formula(formula, existing_columns)
                 if is_valid:
-                    st.success("✅ Formula is valid")
+                    st.success("Formula is valid")
                 else:
-                    st.error(f"❌ Invalid formula: {error_msg}")
+                    st.error(f"Invalid formula: {error_msg}")
             
             st.write("")  # Spacing
             
@@ -188,19 +179,16 @@ class ColumnEditor:
                     st.error("Please enter both column name and formula")
                     return
                 
-                # Validate name
                 is_valid, error_msg = validate_metric_name(calc_column_name)
                 if not is_valid:
                     st.error(error_msg)
                     return
                 
-                # Validate formula
                 is_valid, error_msg = validate_formula(formula, existing_columns)
                 if not is_valid:
                     st.error(f"Invalid formula: {error_msg}")
                     return
                 
-                # Create calculated column
                 calc_column = CalculatedColumn(
                     name=calc_column_name,
                     formula=formula,
@@ -208,34 +196,32 @@ class ColumnEditor:
                     type='calculated'
                 )
                 
-                # Add to configuration
                 st.session_state.columns_config.append(calc_column.to_dict())
                 self.settings.save_columns(st.session_state.columns_config)
                 st.success(f"Added calculated column: {calc_column_name}")
                 st.rerun()
     
     def render_column_list(self, columns: List[Dict[str, Any]], expanded: bool = False):
-        """Render the list of configured columns"""
+        """Render the list of configured columns - only visible when maximized"""
         if not columns:
             return
         
-        # Header with expand/collapse
+        # Show header with maximize/minimize button
         col1, col2 = st.columns([3, 1])
         with col1:
-            st.subheader("Current Columns")
+            if expanded:
+                st.subheader("Current Columns")
         with col2:
             if st.button(
-                f"**{'➖ Minimize' if expanded else '➕ Maximize'}**",
+                f"**{'Minimize' if expanded else 'View Details'}**",
                 use_container_width=True
             ):
                 st.session_state.columns_expanded = not expanded
                 st.rerun()
         
-        # Display columns
+        # Only show column list when expanded
         if expanded:
             self._render_detailed_columns(columns)
-        else:
-            self._render_compact_columns(columns)
     
     def _render_detailed_columns(self, columns: List[Dict[str, Any]]):
         """Render detailed column view"""
@@ -244,8 +230,13 @@ class ColumnEditor:
                 col1, col2, col3 = st.columns([3, 4, 1])
                 
                 with col1:
-                    icon = "📊" if col_config.get('type') == 'metric' else "🧮"
-                    st.markdown(f"### {icon} {col_config['name']}")
+                    # Navy blue circle bullet point
+                    st.markdown(f"""
+                    <div style="display: flex; align-items: center;">
+                        <span style="color: #1a365d; font-size: 10px; margin-right: 8px;">●</span>
+                        <span style="font-size: 18px; font-weight: 600;">{col_config['name']}</span>
+                    </div>
+                    """, unsafe_allow_html=True)
                 
                 with col2:
                     if col_config.get('type') == 'metric':
@@ -259,12 +250,6 @@ class ColumnEditor:
                         self._delete_column(i)
                 
                 st.divider()
-    
-    def _render_compact_columns(self, columns: List[Dict[str, Any]]):
-        """Render compact column view"""
-        for i, col_config in enumerate(columns):
-            icon = "📊" if col_config.get('type') == 'metric' else "🧮"
-            st.write(f"{icon} **{col_config['name']}**")
     
     def _format_metric_details(self, config: Dict[str, Any]) -> str:
         """Format metric column details"""

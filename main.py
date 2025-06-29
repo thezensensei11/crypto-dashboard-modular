@@ -4,12 +4,11 @@ Crypto Dashboard - Main Entry Point
 Simple launcher that delegates to the UI module
 """
 
-import sys
-import logging
-from pathlib import Path
 
-# Add project root to path
-sys.path.insert(0, str(Path(__file__).parent))
+import logging
+
+
+
 
 # Configure logging
 logging.basicConfig(
@@ -19,7 +18,7 @@ logging.basicConfig(
 
 def main():
     """Launch the Streamlit dashboard"""
-    from ui.app import run_app
+    from crypto_dashboard_modular.ui.app import run_app
     run_app()
 
 if __name__ == "__main__":

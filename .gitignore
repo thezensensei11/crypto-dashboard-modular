@@ -1,0 +1,14 @@
+*.duckdb
+*.duckdb.wal
+*.duckdb.lock
+*.db
+__pycache__/
+*.py[cod]
+.env
+logs/
+*.log
+data/cache/
+.DS_Store
+*.backup*
+*.bak
+.streamlit/secrets.toml

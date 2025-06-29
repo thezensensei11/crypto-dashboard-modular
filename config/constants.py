@@ -16,8 +16,8 @@ MIN_CACHE_DAYS = 30
 API_DELAY_BUFFER_MINUTES = 5
 
 # UI Configuration
-PAGE_TITLE = "Altcoin Dashboard"
-PAGE_ICON = "🟠"  # Orange circle emoji (Bitcoin color)
+PAGE_TITLE = "Terminal"
+PAGE_ICON = "🔺"  # Orange circle emoji (Bitcoin color)
 
 # Available intervals
 INTERVALS = ['1m', '5m', '15m', '30m', '1h', '4h', '1d']
@@ -47,7 +47,7 @@ PRICE_THRESHOLDS = {
     'low_precision': 1000.0    # Above this, use 2 decimals
 }
 
-# Theme colors
+# Theme colors - Original Hyperliquid theme
 COLORS = {
     'primary': '#2de19a',       # Hyperliquid green
     'primary_dark': '#26c987',

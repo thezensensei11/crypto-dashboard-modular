@@ -1,19 +1,19 @@
 """
-Theme and styling for the dashboard
+Theme and styling for the dashboard - Original colors with JetBrains Mono font
 """
 
-from config.constants import COLORS
+from crypto_dashboard_modular.config.constants import COLORS
 
 def get_dashboard_css() -> str:
     """Get the complete CSS theme for the dashboard"""
     return f"""
     <style>
-        /* Import Inter font (similar to Claude) */
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+        /* Import JetBrains Mono font */
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
         
         /* Global font and size adjustments */
         html, body, [class*="css"] {{
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            font-family: 'JetBrains Mono', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             font-size: 14px;
         }}
         
@@ -23,27 +23,14 @@ def get_dashboard_css() -> str:
             color: {COLORS['text']};
         }}
         
-        /* Reduce top padding */
+        /* Reduce top padding since no title */
         .main .block-container {{
-            padding-top: 1rem !important;
+            padding-top: 2rem !important;
             padding-bottom: 2rem;
             max-width: 95%;
         }}
         
-        /* Main title styling - reduced margins */
-        .main h1 {{
-            text-align: center !important;
-            margin-top: -10px !important;
-            margin-bottom: 10px !important;
-            font-size: 32px !important;
-            font-weight: 600 !important;
-            background: linear-gradient(90deg, {COLORS['primary']}, {COLORS['primary_dark']});
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }}
-        
-        /* Tab styling - reduced height and spacing */
+        /* Tab styling */
         .stTabs {{
             margin-top: -10px !important;
         }}
@@ -85,6 +72,8 @@ def get_dashboard_css() -> str:
             padding-top: 1rem;
         }}
         
+       
+
         /* Sidebar live prices - custom styling */
         .price-container {{
             background: linear-gradient(135deg, {COLORS['background_light']} 0%, #151515 100%);
@@ -93,6 +82,7 @@ def get_dashboard_css() -> str:
             padding: 12px;
             margin-bottom: 12px;
             transition: all 0.3s;
+            font-family: 'JetBrains Mono', monospace !important;
         }}
         
         .price-container:hover {{
@@ -105,16 +95,24 @@ def get_dashboard_css() -> str:
             color: {COLORS['text_muted']};
             font-weight: 500;
             margin-bottom: 4px;
+            font-family: 'JetBrains Mono', monospace !important;
+            letter-spacing: 0.5px;
         }}
         
         .price-value {{
             font-size: 20px !important;
             font-weight: 600;
             margin-bottom: 0;
+            font-family: 'JetBrains Mono', monospace !important;
+            letter-spacing: -0.5px;
         }}
         
         .price-btc {{
             color: #f7931a;
+        }}
+        
+        .price-eth {{
+            color: #627eea;
         }}
         
         .price-sol {{
@@ -124,6 +122,8 @@ def get_dashboard_css() -> str:
         .price-hype {{
             color: {COLORS['primary']};
         }}
+        
+        
         
         /* Sidebar specific font adjustments */
         section[data-testid="stSidebar"] p,
@@ -197,25 +197,26 @@ def get_dashboard_css() -> str:
             border-radius: 8px;
         }}
         
-        /* DataFrames - enhanced styling */
+        /* DataFrames - enhanced styling with left alignment */
         .dataframe {{
             font-size: 13px;
             border: 1px solid {COLORS['border']} !important;
             background-color: {COLORS['background']} !important;
             width: 100% !important;
+            max-height: none !important;  /* Allow taller tables */
         }}
         
-        /* DataFrame headers - centered and bold */
+        /* DataFrame headers - BRIGHT WHITE and LEFT ALIGNED */
         .dataframe thead th {{
             background-color: {COLORS['background_light']} !important;
-            color: {COLORS['primary']} !important;
+            color: {COLORS['header_text']} !important;  /* Bright white from constants */
             font-weight: 700 !important;
             text-transform: uppercase;
             font-size: 12px !important;
             letter-spacing: 0.5px;
             padding: 12px 8px !important;
             border-bottom: 2px solid {COLORS['primary']} !important;
-            text-align: center !important;
+            text-align: left !important;  /* Left align headers */
         }}
         
         /* DataFrame rows */
@@ -228,10 +229,11 @@ def get_dashboard_css() -> str:
             background-color: #151515 !important;
         }}
         
+        /* DataFrame cells - ALL LEFT ALIGNED */
         .dataframe tbody td {{
             padding: 10px 8px !important;
             color: {COLORS['text']} !important;
-            text-align: center !important;
+            text-align: left !important;  /* Left align all data */
         }}
         
         /* Alternate row coloring */
@@ -239,10 +241,10 @@ def get_dashboard_css() -> str:
             background-color: #111111 !important;
         }}
         
-        /* First column (Symbol) styling - left aligned */
+        /* First column (Symbol) styling - bright white */
         .dataframe tbody td:first-child {{
             font-weight: 600;
-            color: {COLORS['primary']} !important;
+            color: {COLORS['header_text']} !important;  /* Bright white for symbols */
             text-align: left !important;
         }}
         
@@ -285,6 +287,41 @@ def get_dashboard_css() -> str:
         [data-testid="stDataFrame"] td:has(> div > div:contains('-')) {{
             color: {COLORS['negative']} !important;
             background-color: rgba(255, 75, 75, 0.05) !important;
+        }}
+        
+        /* Orange circle for page icon */
+        .stApp > header {{
+            background-color: transparent !important;
+        }}
+        
+        /* Override Streamlit's default alignment for specific columns */
+        [data-testid="stDataFrame"] {{
+            text-align: left !important;
+        }}
+        
+        [data-testid="stDataFrame"] th {{
+            text-align: left !important;
+            color: {COLORS['header_text']} !important;
+            font-weight: 700 !important;
+        }}
+        
+        [data-testid="stDataFrame"] td {{
+            text-align: left !important;
+        }}
+        
+        /* Allow dataframe to expand vertically */
+        [data-testid="stDataFrame"] > div {{
+            max-height: none !important;
+        }}
+        
+        div[data-testid="stDataFrameContainer"] {{
+            max-height: none !important;
+        }}
+        
+        /* Ensure the metrics table section has enough space */
+        .element-container:has([data-testid="stDataFrame"]) {{
+            max-height: none !important;
+            overflow: visible !important;
         }}
     </style>
     """

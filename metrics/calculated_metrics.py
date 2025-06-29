@@ -9,7 +9,7 @@ import re
 from typing import Dict, List, Any
 import logging
 
-from utils.validators import validate_formula, extract_dependencies
+from crypto_dashboard_modular.utils.validators import validate_formula, extract_dependencies
 
 logger = logging.getLogger(__name__)
 

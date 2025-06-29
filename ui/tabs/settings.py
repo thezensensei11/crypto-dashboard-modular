@@ -1,19 +1,19 @@
 """
-Settings Tab - Clean version without emojis
+Settings Tab - DuckDB-only version without cache management
 """
 
 import streamlit as st
 import pandas as pd
-import shutil
 import time
 import logging
 
-from config import Settings, CACHE_DIR
+from crypto_dashboard_modular.config import Settings
 
 logger = logging.getLogger(__name__)
 
+
 class SettingsTab:
-    """Application settings and cache management"""
+    """Application settings - DuckDB version"""
     
     def __init__(self, settings: Settings):
         self.settings = settings
@@ -25,60 +25,51 @@ class SettingsTab:
         col1, col2 = st.columns(2)
         
         with col1:
-            self._render_cache_management()
+            self._render_database_info()
         
         with col2:
             self._render_configuration_management()
     
-    def _render_cache_management(self):
-        """Render cache management section"""
-        st.subheader("Cache Management")
+    def _render_database_info(self):
+        """Render database information"""
+        st.subheader("Database Information")
         
-        # Get cache statistics
-        cache_stats = st.session_state.collector.get_cache_stats()
-        
-        st.info(f"""
-        **Cache Statistics:**
-        - Symbols: {cache_stats.get('total_symbols', 0)}
-        - Files: {cache_stats.get('total_files', 0)}
-        - Total Rows: {cache_stats.get('total_rows', 0):,}
-        - Size: {cache_stats.get('total_size_mb', 0):.1f} MB
-        - API Calls: {cache_stats.get('api_calls', 0)}
-        - Cache Hits: {cache_stats.get('cache_hits', 0)}
-        """)
-        
-        # Clear cache button
-        if st.button("**Clear All Cache**", type="secondary", use_container_width=True):
-            if st.checkbox("I understand this will delete all cached data"):
-                with st.spinner("Clearing cache..."):
-                    cache_dir = self.settings.config_dir / CACHE_DIR
-                    if cache_dir.exists():
-                        shutil.rmtree(cache_dir)
-                    
-                    # Reinitialize data manager
-                    st.session_state.data_manager.clear_all()
-                    st.session_state.collector.reset_counters()
-                    
-                    st.success("Cache cleared successfully!")
-                    time.sleep(1)
-                    st.rerun()
+        # Get database statistics
+        if 'collector' in st.session_state:
+            db_stats = st.session_state.collector.get_cache_stats()
+            
+            st.info(f"""
+            **DuckDB Statistics:**
+            - Total Symbols: {db_stats.get('total_symbols', 0)}
+            - Total Rows: {db_stats.get('total_rows', 0):,}
+            - Database Size: {db_stats.get('total_size_mb', 0):.1f} MB
+            - API Calls Made: {db_stats.get('api_calls', 0)}
+            - Database Hits: {db_stats.get('cache_hits', 0)}
+            """)
+            
+            # Database location
+            st.info("""
+            **Database Location:**
+            `crypto_data.duckdb`
+            
+            The database stores all historical price data and is automatically
+            updated when you fetch new data.
+            """)
+        else:
+            st.warning("Database not initialized")
         
         st.divider()
         
-        # Clear specific symbol cache
-        st.subheader("Clear Symbol Cache")
-        
-        if st.session_state.universe:
-            symbol_to_clear = st.selectbox(
-                "Select symbol to clear",
-                [""] + st.session_state.universe,
-                help="Clear cached data for a specific symbol"
-            )
-            
-            if symbol_to_clear and st.button("**Clear Symbol Cache**", key="clear_symbol"):
-                with st.spinner(f"Clearing cache for {symbol_to_clear}..."):
-                    st.session_state.collector.clear_cache(symbol_to_clear)
-                    st.success(f"Cleared cache for {symbol_to_clear}")
+        # Data retention info
+        st.subheader("Data Retention")
+        st.info("""
+        DuckDB automatically manages data storage with configurable retention policies:
+        - 1m data: 7 days
+        - 5m data: 30 days  
+        - 15m data: 90 days
+        - 1h data: 365 days
+        - 1d data: 10 years
+        """)
     
     def _render_configuration_management(self):
         """Render configuration management section"""
@@ -109,6 +100,10 @@ class SettingsTab:
                     # Reset settings
                     self.settings.reset_all()
                     
+                    # Reset counters
+                    if 'collector' in st.session_state:
+                        st.session_state.collector.reset_counters()
+                    
                     st.success("All configurations reset!")
                     time.sleep(1)
                     st.rerun()
@@ -118,13 +113,20 @@ class SettingsTab:
         # Application info
         st.subheader("Application Info")
         st.info("""
-        **Crypto Dashboard v2.0**
-        - Modular architecture
-        - Smart caching system
+        **Crypto Dashboard v2.0 - DuckDB Edition**
+        
+        Features:
+        - DuckDB for fast local data storage
+        - Async data collection for performance
+        - Smart gap detection and filling
+        - Automatic data staleness checking
         - Real-time price updates
-        - Extensible metrics engine
+        - Modular metric calculations
         
         **Data Sources:**
         - Binance Futures API
         - Hyperliquid Price API
+        
+        **Storage Backend:**
+        - DuckDB (embedded analytical database)
         """)

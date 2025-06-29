@@ -1,0 +1,2 @@
+[console_scripts]
+crypto-dashboard = crypto_dashboard_modular.main:main

@@ -1,11 +1,11 @@
-"""Metrics calculation module"""
+"""Metrics calculation module - Updated for unified engine"""
 
-from .engine import MetricsEngine
+from .unified_engine import MetricsEngine
 from .price_metrics import PriceMetrics
 from .calculated_metrics import CalculatedMetrics
 
 __all__ = [
     'MetricsEngine',
     'PriceMetrics',
-    'CalculatedMetrics'
+    'CalculatedMetrics',
 ]

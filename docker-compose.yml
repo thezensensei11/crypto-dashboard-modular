@@ -1,0 +1,59 @@
+services:
+  dashboard:
+    build: .
+    command: streamlit run main.py
+    depends_on:
+    - redis
+    environment:
+      DB_PATH: /data/crypto_data.duckdb
+      USE_DUCKDB: 'true'
+    ports:
+    - 8501:8501
+    volumes:
+    - ./data:/data
+  data_processor:
+    build: .
+    command: python -m infrastructure.processors.data_processor
+    depends_on:
+    - redis
+    environment:
+      DB_PATH: /data/crypto_data.duckdb
+      REDIS_URL: redis://redis:6379
+    volumes:
+    - ./data:/data
+  redis:
+    image: redis:7-alpine
+    ports:
+    - 6379:6379
+    volumes:
+    - redis_data:/data
+  rest_collector:
+    build: .
+    command: python -m infrastructure.collectors.collectors
+    depends_on:
+    - redis
+    environment:
+      COLLECTOR_TYPE: rest
+      REDIS_URL: redis://redis:6379
+  scheduler:
+    build: .
+    command: celery -A infrastructure.scheduler.scheduler worker --beat --loglevel=info
+    depends_on:
+    - redis
+    environment:
+      CELERY_BROKER: redis://redis:6379/0
+      DB_PATH: /data/crypto_data.duckdb
+    volumes:
+    - ./data:/data
+  websocket_collector:
+    build: .
+    command: python -m infrastructure.collectors.collectors
+    depends_on:
+    - redis
+    environment:
+      COLLECTOR_TYPE: websocket
+      REDIS_URL: redis://redis:6379
+version: '3.8'
+volumes:
+  crypto_data: {}
+  redis_data: {}

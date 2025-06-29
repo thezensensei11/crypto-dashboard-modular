@@ -1,5 +1,5 @@
 """
-Main Streamlit application
+Main Streamlit application - DuckDB-only version
 """
 
 import streamlit as st
@@ -7,18 +7,21 @@ import pandas as pd
 from datetime import datetime
 import logging
 
-from config import get_settings, PAGE_TITLE, PAGE_ICON
-from ui.styles.theme import apply_theme
-from ui.components.sidebar import SidebarComponent
-from ui.tabs import UniverseTab, DashboardTab, ControlsTab, SettingsTab
-from data.collector import BinanceDataCollector
-from data.cache_manager import SmartDataManager
-from metrics.engine import MetricsEngine
+from crypto_dashboard_modular.config import get_settings, PAGE_TITLE, PAGE_ICON
+from crypto_dashboard_modular.ui.styles.theme import apply_theme
+from crypto_dashboard_modular.ui.components.sidebar import SidebarComponent
+from crypto_dashboard_modular.ui.tabs import (
+    UniverseTab, DashboardTab, ControlsTab, SettingsTab, 
+    BacktesterTab, ShockTab
+)
+from crypto_dashboard_modular.data.duckdb_collector import BinanceDataCollector
+from crypto_dashboard_modular.metrics.unified_engine import MetricsEngine
 
 logger = logging.getLogger(__name__)
 
+
 class DashboardApp:
-    """Main dashboard application"""
+    """Main dashboard application with DuckDB backend"""
     
     def __init__(self):
         self.settings = get_settings()
@@ -33,9 +36,14 @@ class DashboardApp:
             st.session_state.metrics_data = pd.DataFrame()
             st.session_state.last_refresh = self.settings.get_last_refresh()
             
-            # Initialize data components
+            # Initialize data components with DuckDB
+            logger.info("Initializing DuckDB data collector...")
+            
+            # Create collector - always async internally, DuckDB backed
             st.session_state.collector = BinanceDataCollector()
-            st.session_state.data_manager = SmartDataManager()
+            logger.info("✓ DuckDB async data collection initialized")
+            
+            # Create metrics engine
             st.session_state.engine = MetricsEngine(st.session_state.collector)
             
             # UI state
@@ -64,46 +72,61 @@ class DashboardApp:
         
         # Apply theme
         apply_theme()
-
         
-        # Main title
-        st.markdown("<h1 style='text-align: center;'>Altcoin Dashboard</h1>", unsafe_allow_html=True)
+        # Show database status in header
+        st.markdown(
+            '<div style="position: fixed; top: 10px; right: 10px; background: #00d4ff; color: #000; '
+            'padding: 5px 10px; border-radius: 5px; font-size: 11px; font-weight: bold; z-index: 999;">'
+            '🦆 DUCKDB</div>',
+            unsafe_allow_html=True
+        )
         
-        # Render sidebar
+        # Render sidebar (simplified - no cache stats)
         sidebar = SidebarComponent()
-        cache_stats = st.session_state.collector.get_cache_stats()
+        stats = st.session_state.collector.get_cache_stats()
         sidebar.render(
             universe_size=len(st.session_state.universe),
             columns_count=len(st.session_state.columns_config),
-            cache_stats=cache_stats
+            db_stats=stats  # Changed from cache_stats
         )
         
-        # Create tabs - Metrics Dashboard first
-        tab1, tab2, tab3, tab4 = st.tabs([
+        # Create tabs (removed Cache Inspector)
+        tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
             "Metrics Dashboard",
+            "Backtester",
+            "Shock Analysis",
             "Universe Manager", 
-            "Dashboard Controls", 
+            "Dashboard Controls",
             "Settings"
         ])
         
-        # Initialize tab components in order of appearance
-        dashboard_tab = DashboardTab(self.settings)  # Tab 1
-        universe_tab = UniverseTab(self.settings)     # Tab 2
-        controls_tab = ControlsTab(self.settings)     # Tab 3
-        settings_tab = SettingsTab(self.settings)     # Tab 4
+        # Initialize tab components
+        dashboard_tab = DashboardTab(self.settings)
+        backtester_tab = BacktesterTab(self.settings)
+        shock_tab = ShockTab(self.settings)
+        universe_tab = UniverseTab(self.settings)
+        controls_tab = ControlsTab(self.settings)
+        settings_tab = SettingsTab(self.settings)
         
-        # Render tabs - Dashboard first
+        # Render tabs
         with tab1:
             dashboard_tab.render()
         
         with tab2:
-            universe_tab.render()
+            backtester_tab.render()
         
         with tab3:
-            controls_tab.render()
+            shock_tab.render()
         
         with tab4:
+            universe_tab.render()
+        
+        with tab5:
+            controls_tab.render()
+        
+        with tab6:
             settings_tab.render()
+
 
 def run_app():
     """Entry point for the Streamlit app"""

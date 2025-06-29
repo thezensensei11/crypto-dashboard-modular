@@ -8,8 +8,9 @@ import numpy as np
 from typing import Dict, Optional
 import logging
 
+
 # Import existing price metrics
-from price_metrics import PriceMetrics as _PriceMetrics
+from crypto_dashboard_modular.metrics.price_calc import PriceMetrics as _PriceMetrics
 
 logger = logging.getLogger(__name__)
 

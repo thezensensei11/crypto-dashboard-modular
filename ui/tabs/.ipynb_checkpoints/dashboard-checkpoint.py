@@ -1,5 +1,5 @@
 """
-Metrics Dashboard Tab
+Metrics Dashboard Tab - Fixed version without async issues
 """
 
 import streamlit as st
@@ -8,11 +8,11 @@ import time
 from datetime import datetime
 import logging
 
-from config import Settings
-from ui.components.column_editor import ColumnEditor
-from ui.components.metrics_table import MetricsTable
-from metrics import MetricsEngine, PriceMetrics, CalculatedMetrics
-from data.models import MetricConfig, FetchDiagnostics
+from crypto_dashboard_modular.config import Settings
+from crypto_dashboard_modular.ui.components.column_editor import ColumnEditor
+from crypto_dashboard_modular.ui.components.metrics_table import MetricsTable
+from metrics.unified_engine import MetricsEngine, PriceMetrics, CalculatedMetrics
+from crypto_dashboard_modular.data.models import MetricConfig, FetchDiagnostics
 
 logger = logging.getLogger(__name__)
 
@@ -29,13 +29,22 @@ class DashboardTab:
         st.header("Metrics Dashboard")
         
         if not st.session_state.universe:
-            st.warning("No symbols in universe. Please add symbols in the Universe Manager tab.")
+            # Better empty state since this is now the first tab users see
+            col1, col2, col3 = st.columns([1, 2, 1])
+            with col2:
+                st.warning("**No symbols configured yet**")
+                st.info("""
+                To get started:
+                1. Click on the **Universe Manager** tab above
+                2. Add symbols you want to track
+                3. Come back here to view metrics
+                """)
             return
         
         # Column configuration section
         self.column_editor.render()
         
-        # Display current columns
+        # Display current columns (only visible when maximized)
         if st.session_state.columns_config:
             self.column_editor.render_column_list(
                 st.session_state.columns_config,
@@ -60,11 +69,11 @@ class DashboardTab:
         col1, col2, col3 = st.columns([2, 2, 1])
         
         with col1:
-            if st.button("**📊 Recalculate Metrics**", type="primary", use_container_width=True):
+            if st.button("**Recalculate Metrics**", type="primary", use_container_width=True):
                 self._calculate_metrics(force_cache=True)
         
         with col2:
-            if st.button("**🔄 Fetch New Data & Calculate**", type="primary", use_container_width=True):
+            if st.button("**Fetch New Data & Calculate**", type="primary", use_container_width=True):
                 st.session_state.last_refresh = datetime.now()
                 self.settings.save_state(last_refresh=st.session_state.last_refresh.isoformat())
                 self._calculate_metrics(force_cache=False)
@@ -78,19 +87,15 @@ class DashboardTab:
         if st.session_state.last_refresh:
             age = datetime.now() - st.session_state.last_refresh
             if age.total_seconds() < 3600:
-                st.success(f"✅ {int(age.total_seconds() / 60)}m ago")
+                st.success(f"{int(age.total_seconds() / 60)}m ago")
             else:
-                st.warning(f"⚠️ {int(age.total_seconds() / 3600)}h ago")
+                st.warning(f"{int(age.total_seconds() / 3600)}h ago")
         else:
-            st.info("📊 Ready")
+            st.info("Ready")
     
     def _render_no_data_message(self):
         """Render message when no data is available"""
-        cache_dir = self.settings.config_dir / "smart_cache"
-        if not cache_dir.exists():
-            st.warning("⚠️ No cached data found. Click 'Fetch New Data & Calculate' to download data from Binance.")
-        else:
-            st.info("📊 Click 'Recalculate Metrics' to calculate metrics using cached data, or 'Fetch New Data & Calculate' to get the latest data from Binance.")
+        st.info("Click 'Recalculate Metrics' to calculate metrics using database data, or 'Fetch New Data & Calculate' to get the latest data from Binance.")
     
     def _calculate_metrics(self, force_cache: bool = False):
         """Calculate all metrics for all symbols"""
@@ -119,10 +124,10 @@ class DashboardTab:
             def progress_callback(current, total, message):
                 progress = current / total
                 progress_bar.progress(progress)
-                mode = "Cache Only" if force_cache else "Normal"
+                mode = "Database Only" if force_cache else "Normal"
                 status_text.text(f"{message} ({current}/{total}) - {mode}")
             
-            # Calculate base metrics
+            # Calculate base metrics using the engine's batch method
             results_df = engine.calculate_batch(
                 symbols=st.session_state.universe,
                 metric_configs=metric_configs,
@@ -130,29 +135,52 @@ class DashboardTab:
                 progress_callback=progress_callback
             )
             
-            # Add price data
+            # Now fetch price data for display columns
+            status_text.text("Fetching price data for all symbols...")
+            
+            # Determine the appropriate interval for price data
+            price_intervals = [config.interval for config in metric_configs if config.interval]
+            price_interval = min(price_intervals, key=lambda x: self._interval_to_minutes(x)) if price_intervals else '1h'
+            
+            # Calculate required lookback
+            required_days = max(31, 3)  # At least 31 days for volume average
+            
+            # Fetch price data for each symbol individually
             for idx, symbol in enumerate(st.session_state.universe):
-                progress_callback(idx + 1, len(st.session_state.universe), f"Getting prices for {symbol}")
+                progress_callback(idx + 1, len(st.session_state.universe), f"Fetching price data for {symbol}")
                 
-                price_data = st.session_state.collector.get_price_data(
-                    symbol=symbol,
-                    interval='1h',
-                    lookback_days=3,
-                    force_cache=force_cache
-                )
-                
-                if price_data is not None and not price_data.empty:
-                    price_metrics = PriceMetrics.calculate_all(price_data, symbol)
+                try:
+                    price_data = st.session_state.collector.get_price_data(
+                        symbol=symbol,
+                        interval=price_interval,
+                        lookback_days=required_days,
+                        force_cache=force_cache
+                    )
                     
-                    # Update results dataframe
-                    mask = results_df['Symbol'] == symbol
-                    for key, value in price_metrics.items():
-                        if key in ['Price', '24h Return %', '24h Volume Change %']:
-                            results_df.loc[mask, key] = value
+                    if price_data is not None and not price_data.empty:
+                        # Calculate price-based display metrics
+                        price_metrics = self._calculate_price_metrics(price_data, symbol)
+                        
+                        # Update results dataframe
+                        mask = results_df['Symbol'] == symbol
+                        for key, value in price_metrics.items():
+                            if key in results_df.columns or key in ['Price', '24h Return %', '24h Volume Change %', '24h Vol/30d Avg']:
+                                results_df.loc[mask, key] = value
+                                
+                except Exception as e:
+                    logger.warning(f"Error fetching data for {symbol}: {e}")
+                    continue
             
             # Calculate formula columns
             if calculated_configs:
-                results_df = CalculatedMetrics.calculate_batch(results_df, calculated_configs)
+                try:
+                    # Import CalculatedMetrics if available
+                    from crypto_dashboard_modular.metrics.calculated_metrics import CalculatedMetrics
+                    results_df = CalculatedMetrics.calculate_batch(results_df, calculated_configs)
+                except ImportError:
+                    logger.warning("CalculatedMetrics not available")
+                except Exception as e:
+                    logger.error(f"Error calculating formula columns: {e}")
             
             # Clear progress indicators
             progress_bar.empty()
@@ -160,6 +188,15 @@ class DashboardTab:
             
             # Update diagnostics
             end_time = time.time()
+            total_time = end_time - start_time
+            
+            # Show performance info
+            perf_col1, perf_col2 = st.columns(2)
+            with perf_col1:
+                st.success(f"✓ Completed in {total_time:.1f}s")
+            with perf_col2:
+                st.info(f"API calls: {st.session_state.collector.api_call_count}, DB hits: {st.session_state.collector.cache_hit_count}")
+            
             st.session_state.fetch_diagnostics = FetchDiagnostics(
                 start_time=start_time,
                 end_time=end_time,
@@ -183,6 +220,39 @@ class DashboardTab:
             
             st.rerun()
     
+    def _calculate_price_metrics(self, price_data: pd.DataFrame, symbol: str) -> dict:
+        """Calculate price-based display metrics"""
+        try:
+            # Import PriceMetrics if available
+            from crypto_dashboard_modular.metrics.price_metrics import PriceMetrics
+            return PriceMetrics.calculate_all(price_data, symbol)
+        except ImportError:
+            # Fallback to basic calculations
+            metrics = {}
+            
+            if not price_data.empty:
+                # Current price
+                metrics['Price'] = price_data.iloc[-1]['close']
+                
+                # 24h return
+                if len(price_data) >= 96:  # 24 hours of 15m candles
+                    price_24h_ago = price_data.iloc[-96]['close']
+                    metrics['24h Return %'] = ((metrics['Price'] / price_24h_ago) - 1) * 100
+                
+                # Volume metrics
+                if 'volume' in price_data.columns:
+                    current_volume = price_data.iloc[-96:]['volume'].sum() if len(price_data) >= 96 else price_data['volume'].sum()
+                    
+                    # 30-day average
+                    if len(price_data) >= 2880:  # 30 days of 15m candles
+                        avg_30d_volume = price_data.iloc[-2880:]['volume'].sum() / 30
+                        metrics['24h Vol/30d Avg'] = current_volume / avg_30d_volume if avg_30d_volume > 0 else 0
+            
+            return metrics
+        except Exception as e:
+            logger.error(f"Error calculating price metrics for {symbol}: {e}")
+            return {}
+    
     def _render_metrics_table(self):
         """Render the metrics table"""
         st.subheader("Metrics Table")
@@ -192,3 +262,11 @@ class DashboardTab:
             data=st.session_state.metrics_data,
             columns_config=st.session_state.columns_config
         )
+    
+    def _interval_to_minutes(self, interval: str) -> int:
+        """Convert interval string to minutes"""
+        mapping = {
+            '1m': 1, '5m': 5, '15m': 15, '30m': 30,
+            '1h': 60, '4h': 240, '1d': 1440, '1w': 10080
+        }
+        return mapping.get(interval, 60)

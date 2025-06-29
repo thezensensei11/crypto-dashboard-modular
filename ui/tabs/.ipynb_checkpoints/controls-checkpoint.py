@@ -1,5 +1,5 @@
 """
-Dashboard Controls Tab
+Dashboard Controls Tab - Clean version without emojis
 """
 
 import streamlit as st
@@ -7,8 +7,8 @@ import os
 from datetime import datetime
 import logging
 
-from config import Settings
-from utils.formatting import format_duration
+from crypto_dashboard_modular.config import Settings
+from crypto_dashboard_modular.utils.formatting import format_duration
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +34,7 @@ class ControlsTab:
     def _render_diagnostics(self):
         """Render performance diagnostics"""
         if hasattr(st.session_state, 'fetch_diagnostics') and st.session_state.fetch_diagnostics:
-            st.subheader("📈 Last Operation Performance")
+            st.subheader("Last Operation Performance")
             
             diag = st.session_state.fetch_diagnostics
             
@@ -50,15 +50,15 @@ class ControlsTab:
             
             with col3:
                 if diag.force_cache_mode:
-                    st.info("🔒 Cache-only mode")
+                    st.info("Cache-only mode")
                 else:
-                    st.info("🔄 Normal mode")
+                    st.info("Normal mode")
             
             st.divider()
     
     def _render_save_controls(self):
         """Render save state controls"""
-        st.subheader("💾 Save Dashboard State")
+        st.subheader("Save Dashboard State")
         
         if st.button("**Save Dashboard State**", type="secondary", use_container_width=True):
             with st.spinner("Saving state..."):
@@ -71,7 +71,7 @@ class ControlsTab:
                 
                 # Verify save
                 if self.settings.state_file.exists():
-                    st.success("✅ Dashboard state saved successfully!")
+                    st.success("Dashboard state saved successfully!")
                     
                     # Show what was saved
                     with st.expander("Saved State Details", expanded=False):
@@ -90,7 +90,7 @@ class ControlsTab:
     
     def _render_export_import(self):
         """Render export/import controls"""
-        st.subheader("📤 Export/Import Configuration")
+        st.subheader("Export/Import Configuration")
         
         col1, col2 = st.columns(2)
         
@@ -134,7 +134,7 @@ class ControlsTab:
                         self.settings.save_universe(st.session_state.universe)
                         self.settings.save_columns(st.session_state.columns_config)
                         
-                        st.success("✅ Configuration imported successfully!")
+                        st.success("Configuration imported successfully!")
                         st.rerun()
                     else:
                         st.error("Invalid configuration file format")

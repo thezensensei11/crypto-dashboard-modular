@@ -7,8 +7,8 @@ import pandas as pd
 from datetime import datetime
 from typing import List, Dict, Any
 
-from config import BASE_COLUMNS
-from utils.formatting import format_price, format_percentage, format_ratio
+from crypto_dashboard_modular.config import BASE_COLUMNS
+from crypto_dashboard_modular.utils.formatting import format_price, format_percentage, format_ratio
 
 class MetricsTable:
     """Component for displaying metrics data in a table"""

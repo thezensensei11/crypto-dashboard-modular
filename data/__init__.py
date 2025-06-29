@@ -1,7 +1,6 @@
-"""Data management module"""
+"""Data management module - DuckDB only"""
 
-from .collector import BinanceDataCollector
-from .cache_manager import SmartDataManager
+from .duckdb_collector import BinanceDataCollector
 from .models import (
     MetricConfig, 
     CalculatedColumn, 
@@ -13,9 +12,8 @@ from .models import (
 )
 
 __all__ = [
-    # Data collection and caching
+    # Data collection - DuckDB backed
     'BinanceDataCollector',
-    'SmartDataManager',
     
     # Data models
     'MetricConfig',
@@ -26,5 +24,5 @@ __all__ = [
     
     # Enums
     'MetricType',
-    'ColumnType'
+    'ColumnType',
 ]
