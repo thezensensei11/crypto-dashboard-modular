@@ -12,27 +12,28 @@ pyarrow>=10.0.0  # For parquet support
 
 # Message Bus and Event System
 redis>=4.5.0
-redis-py-cluster>=2.1.0  # For Redis cluster support
+# redis-py-cluster>=2.1.0  # REMOVED - Not needed, causes conflicts
 
 # Task Scheduling
 celery>=5.3.0
 flower>=2.0.0  # Celery monitoring
-celery-redbeat>=2.0.0  # Redis-based periodic task scheduler
+# celery-redbeat>=2.0.0  # REMOVED - Optional, can add later if needed
 
 # WebSocket Support
 websockets>=11.0
 websocket-client>=1.6.0
 
 # Async Support
-asyncio>=3.4.3
+# asyncio>=3.4.3  # REMOVED - Built into Python 3.7+
 aioredis>=2.0.0
 aiodns>=3.0.0  # Async DNS resolution
-cchardet>=2.1.7  # Faster character detection
+# cchardet>=2.1.7  # Faster character detection # Optional - removed due to build issues
+chardet>=5.0.0  # Pure Python alternative to cchardet
 Brotli>=1.0.9  # Compression support
 
 # Monitoring and Logging
 prometheus-client>=0.18.0
-grafana-api>=1.0.3
+# grafana-api>=1.0.3  # REMOVED - Optional
 python-json-logger>=2.0.0
 
 # Performance
@@ -42,7 +43,6 @@ msgpack>=1.0.0  # Binary serialization
 
 # Development and Testing
 pytest>=7.0
-pytest-asyncio>=0.21.0
 pytest-cov>=4.0
 black>=22.0
 flake8>=5.0
@@ -64,8 +64,9 @@ rich>=13.0.0  # Better terminal output
 
 # Data validation
 pydantic>=2.0.0
+pydantic-settings>=2.0.0  # For BaseSettings
 marshmallow>=3.20.0
 
 # API Support (for future)
-fastapi>=0.104.0
-uvicorn>=0.24.0
+# fastapi>=0.104.0  # REMOVED - Optional for future
+# uvicorn>=0.24.0   # REMOVED - Optional for future

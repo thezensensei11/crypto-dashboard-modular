@@ -1,0 +1,5 @@
+"""
+Dashboard application
+"""
+
+# Dashboard components

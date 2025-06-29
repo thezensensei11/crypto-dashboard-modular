@@ -1,59 +1,133 @@
+# Docker Compose configuration for the crypto data platform
+# Place in: crypto-dashboard/docker-compose.yml
+
+version: '3.8'
+
 services:
-  dashboard:
-    build: .
-    command: streamlit run main.py
-    depends_on:
-    - redis
-    environment:
-      DB_PATH: /data/crypto_data.duckdb
-      USE_DUCKDB: 'true'
-    ports:
-    - 8501:8501
-    volumes:
-    - ./data:/data
-  data_processor:
-    build: .
-    command: python -m infrastructure.processors.data_processor
-    depends_on:
-    - redis
-    environment:
-      DB_PATH: /data/crypto_data.duckdb
-      REDIS_URL: redis://redis:6379
-    volumes:
-    - ./data:/data
+  # Redis for message bus and Celery broker
   redis:
     image: redis:7-alpine
+    container_name: crypto-redis
     ports:
-    - 6379:6379
+      - "6379:6379"
     volumes:
-    - redis_data:/data
-  rest_collector:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+
+  # Celery worker for processing tasks
+  celery-worker:
     build: .
-    command: python -m infrastructure.collectors.collectors
-    depends_on:
-    - redis
+    container_name: crypto-celery-worker
+    command: celery -A infrastructure.scheduler.celery_app worker --loglevel=info -Q collectors,processors,maintenance
     environment:
-      COLLECTOR_TYPE: rest
-      REDIS_URL: redis://redis:6379
-  scheduler:
-    build: .
-    command: celery -A infrastructure.scheduler.scheduler worker --beat --loglevel=info
-    depends_on:
-    - redis
-    environment:
-      CELERY_BROKER: redis://redis:6379/0
-      DB_PATH: /data/crypto_data.duckdb
+      - REDIS_HOST=redis
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+      - DUCKDB_PATH=/data/crypto_data.duckdb
     volumes:
-    - ./data:/data
-  websocket_collector:
-    build: .
-    command: python -m infrastructure.collectors.collectors
+      - ./:/app
+      - duckdb_data:/data
     depends_on:
-    - redis
+      - redis
+    restart: unless-stopped
+
+  # Celery beat for scheduled tasks
+  celery-beat:
+    build: .
+    container_name: crypto-celery-beat
+    command: celery -A infrastructure.scheduler.celery_app beat --loglevel=info
     environment:
-      COLLECTOR_TYPE: websocket
-      REDIS_URL: redis://redis:6379
-version: '3.8'
+      - REDIS_HOST=redis
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+    volumes:
+      - ./:/app
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  # WebSocket collector service
+  websocket-collector:
+    build: .
+    container_name: crypto-websocket-collector
+    command: python -m scripts.run_collector websocket
+    environment:
+      - REDIS_HOST=redis
+      - ENABLE_WEBSOCKET=true
+    volumes:
+      - ./:/app
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  # REST collector service (can be scaled)
+  rest-collector:
+    build: .
+    container_name: crypto-rest-collector
+    command: python -m scripts.run_collector rest
+    environment:
+      - REDIS_HOST=redis
+      - ENABLE_REST_COLLECTOR=true
+    volumes:
+      - ./:/app
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  # Data processor service
+  data-processor:
+    build: .
+    container_name: crypto-data-processor
+    command: python -m scripts.run_processor
+    environment:
+      - REDIS_HOST=redis
+      - DUCKDB_PATH=/data/crypto_data.duckdb
+      - ENABLE_DATA_PROCESSOR=true
+    volumes:
+      - ./:/app
+      - duckdb_data:/data
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  # Flower for Celery monitoring (optional)
+  flower:
+    build: .
+    container_name: crypto-flower
+    command: celery -A infrastructure.scheduler.celery_app flower
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/1
+    ports:
+      - "5555:5555"
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+  # Streamlit dashboard (existing)
+  dashboard:
+    build: .
+    container_name: crypto-dashboard
+    command: streamlit run main.py
+    environment:
+      - REDIS_HOST=redis
+      - DUCKDB_PATH=/data/crypto_data.duckdb
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_HEADLESS=true
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./:/app
+      - duckdb_data:/data
+    depends_on:
+      - redis
+      - data-processor
+    restart: unless-stopped
+
 volumes:
-  crypto_data: {}
-  redis_data: {}
+  redis_data:
+  duckdb_data:
+
+networks:
+  default:
+    name: crypto-network

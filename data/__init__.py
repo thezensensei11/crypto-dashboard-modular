@@ -1,28 +1,10 @@
-"""Data management module - DuckDB only"""
+"""
+Data management and adapters
+"""
 
-from .duckdb_collector import BinanceDataCollector
-from .models import (
-    MetricConfig, 
-    CalculatedColumn, 
-    PriceData, 
-    CacheStats, 
-    FetchDiagnostics,
-    MetricType,
-    ColumnType
-)
-
-__all__ = [
-    # Data collection - DuckDB backed
-    'BinanceDataCollector',
-    
-    # Data models
-    'MetricConfig',
-    'CalculatedColumn', 
-    'PriceData',
-    'CacheStats',
-    'FetchDiagnostics',
-    
-    # Enums
-    'MetricType',
-    'ColumnType',
-]
+# Keep existing imports if any
+# Add infrastructure adapter when needed
+try:
+    from .infrastructure_adapter import InfrastructureAdapter
+except ImportError:
+    pass  # Adapter not yet implemented
