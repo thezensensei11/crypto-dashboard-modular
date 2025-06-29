@@ -1,36 +1,68 @@
 #!/bin/bash
-# Script to fix DuckDB lock issue
+# Fix DuckDB Lock Issue
+# Save as: fix_duckdb_lock.sh and run with: bash fix_duckdb_lock.sh
 
 echo "=== Fixing DuckDB Lock Issue ==="
 echo
 
-# 1. Find and kill the process holding the lock
-echo "1. Looking for Python processes with PID 29885..."
-ps aux | grep 29885 | grep -v grep
+# Colors
+GREEN='\033[92m'
+YELLOW='\033[93m'
+RED='\033[91m'
+RESET='\033[0m'
 
-echo
-echo "2. Killing the process holding the DuckDB lock..."
-kill -9 29885
+# 1. Stop all Python processes using the database
+echo -e "${YELLOW}Stopping all processes using crypto_data.duckdb...${RESET}"
 
-# Wait a moment
-sleep 1
+# Find PIDs using the database file
+PIDS=$(lsof 2>/dev/null | grep crypto_data.duckdb | awk '{print $2}' | sort -u)
 
-# 2. Check if it's killed
-if ps -p 29885 > /dev/null 2>&1; then
-    echo "   ⚠️  Process still running, trying sudo..."
-    sudo kill -9 29885
+if [ -n "$PIDS" ]; then
+    echo "Found processes: $PIDS"
+    for PID in $PIDS; do
+        echo "Killing PID: $PID"
+        kill -9 $PID 2>/dev/null || sudo kill -9 $PID 2>/dev/null
+    done
+    echo -e "${GREEN}✓ Processes killed${RESET}"
 else
-    echo "   ✓ Process killed successfully"
+    echo "No processes found using the database"
 fi
 
+# 2. Alternative: Kill all crypto-dashboard processes
 echo
-echo "3. Looking for any other Python processes that might be using crypto_data.duckdb..."
-lsof | grep crypto_data.duckdb 2>/dev/null || echo "   No other processes found using the database"
+echo -e "${YELLOW}Killing any crypto-dashboard processes...${RESET}"
+pkill -f "crypto-dashboard-modular" 2>/dev/null
+pkill -f "run_processor" 2>/dev/null
+pkill -f "run_collector" 2>/dev/null
+
+# 3. Remove lock files if they exist
+echo
+echo -e "${YELLOW}Removing any lock files...${RESET}"
+rm -f crypto_data.duckdb.wal 2>/dev/null
+rm -f crypto_data.duckdb.lock 2>/dev/null
+
+# 4. Wait a moment
+sleep 2
+
+# 5. Verify database is accessible
+echo
+echo -e "${YELLOW}Testing database access...${RESET}"
+python3 -c "
+import duckdb
+try:
+    conn = duckdb.connect('crypto_data.duckdb', read_only=True)
+    tables = conn.execute('SHOW TABLES').fetchall()
+    print('✓ Database is accessible. Tables:', [t[0] for t in tables])
+    conn.close()
+except Exception as e:
+    print('✗ Database still locked:', e)
+" 2>&1
 
 echo
-echo "4. Alternative: Kill all Python processes accessing the project..."
-echo "   Run this if needed: pkill -f 'crypto-dashboard-modular'"
-
+echo -e "${GREEN}=== Lock should be cleared ===${RESET}"
 echo
-echo "✅ DuckDB lock should be cleared. You can now run:"
-echo "   python3 scripts/run_processor.py"
+echo "You can now run:"
+echo "  python3 run_processor_fixed.py"
+echo
+echo "Or to use the original processor:"
+echo "  python3 scripts/run_processor.py"

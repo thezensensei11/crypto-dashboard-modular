@@ -1,228 +1,156 @@
 #!/usr/bin/env python3
 """
-Complete system status check
-Save as: check_status.py
-Run with: python3 check_status.py
+Test script to verify concurrent DuckDB access works
+Save as: test_concurrent_access.py
 """
 
-import redis
-import psutil
-import os
+import duckdb
+import time
+import threading
+import multiprocessing
 from datetime import datetime
-from pathlib import Path
-
-# Colors
-GREEN = '\033[92m'
-YELLOW = '\033[93m'
-RED = '\033[91m'
-BLUE = '\033[94m'
-RESET = '\033[0m'
-BOLD = '\033[1m'
 
 
-def check_processes():
-    """Check running processes"""
-    print(f"\n{BOLD}1. Running Processes:{RESET}")
-    print("-" * 50)
-    
-    processes = {
-        'processor': False,
-        'websocket': False,
-        'rest': False,
-        'redis': False
-    }
-    
-    for proc in psutil.process_iter(['pid', 'name', 'cmdline']):
-        try:
-            cmdline = ' '.join(proc.info['cmdline'] or [])
-            
-            if 'redis-server' in cmdline:
-                processes['redis'] = proc.info['pid']
-            elif 'run_processor.py' in cmdline:
-                processes['processor'] = proc.info['pid']
-            elif 'run_collector.py websocket' in cmdline:
-                processes['websocket'] = proc.info['pid']
-            elif 'run_collector.py rest' in cmdline:
-                processes['rest'] = proc.info['pid']
-                
-        except (psutil.NoSuchProcess, psutil.AccessDenied):
-            pass
-    
-    # Display status
-    for name, pid in processes.items():
-        if pid:
-            print(f"{GREEN}✓ {name:12} running (PID: {pid}){RESET}")
-        else:
-            print(f"{RED}✗ {name:12} not running{RESET}")
-    
-    return processes
-
-
-def check_redis():
-    """Check Redis status and contents"""
-    print(f"\n{BOLD}2. Redis Status:{RESET}")
-    print("-" * 50)
-    
+def test_read_only_access(db_path="crypto_data.duckdb"):
+    """Test read-only access to database"""
     try:
-        r = redis.Redis(host='localhost', port=6379, decode_responses=True)
-        r.ping()
-        print(f"{GREEN}✓ Redis connected{RESET}")
+        # Use read_only=True to allow concurrent access
+        conn = duckdb.connect(db_path, read_only=True)
+        tables = conn.execute("SHOW TABLES").fetchall()
+        count = conn.execute("SELECT COUNT(*) FROM ohlcv").fetchone()[0]
+        conn.close()
         
-        # Check streams
-        streams = [
-            "crypto:stream:price.update",
-            "crypto:stream:candle.closed",
-            "crypto:stream:historical.data"
-        ]
-        
-        total_messages = 0
-        for stream in streams:
-            try:
-                length = r.xlen(stream)
-                total_messages += length
-                
-                # Get latest message
-                latest_msg = None
-                if length > 0:
-                    messages = r.xrevrange(stream, count=1)
-                    if messages:
-                        msg_id = messages[0][0]
-                        timestamp = int(msg_id.split('-')[0]) / 1000
-                        age = (datetime.now().timestamp() - timestamp)
-                        
-                        if age < 60:
-                            status = f"{GREEN}active ({int(age)}s ago){RESET}"
-                        elif age < 300:
-                            status = f"{YELLOW}recent ({int(age/60)}m ago){RESET}"
-                        else:
-                            status = f"{RED}stale ({int(age/3600)}h ago){RESET}"
-                        
-                        print(f"  {stream.split(':')[-1]:20} {length:6} msgs  {status}")
-                else:
-                    print(f"  {stream.split(':')[-1]:20} {length:6} msgs  {YELLOW}empty{RESET}")
-                    
-            except Exception as e:
-                print(f"  {stream.split(':')[-1]:20} {RED}error: {e}{RESET}")
-        
-        print(f"\n  Total messages: {total_messages}")
-        
+        print(f"✓ Read-only access successful. Tables: {len(tables)}, Rows: {count}")
+        return True
     except Exception as e:
-        print(f"{RED}✗ Redis error: {e}{RESET}")
+        print(f"✗ Read-only access failed: {e}")
         return False
-    
-    return True
 
 
-def check_duckdb():
-    """Check DuckDB status"""
-    print(f"\n{BOLD}3. DuckDB Status:{RESET}")
-    print("-" * 50)
-    
-    db_path = Path("crypto_data.duckdb")
-    
-    if db_path.exists():
-        size_mb = db_path.stat().st_size / (1024 * 1024)
-        print(f"{GREEN}✓ Database exists ({size_mb:.1f} MB){RESET}")
+def test_write_with_release(db_path="crypto_data.duckdb"):
+    """Test write access with connection release"""
+    try:
+        # Open connection
+        conn = duckdb.connect(db_path)
         
-        # Check for locks
+        # Do a quick write
+        conn.execute("""
+            INSERT INTO ohlcv (symbol, interval, timestamp, open, high, low, close, volume)
+            VALUES ('TEST', '1m', CURRENT_TIMESTAMP, 100, 101, 99, 100.5, 1000)
+        """)
+        
+        # IMPORTANT: Close connection immediately after write
+        conn.close()
+        
+        print("✓ Write completed and connection released")
+        return True
+    except Exception as e:
+        print(f"✗ Write failed: {e}")
+        return False
+
+
+def concurrent_reader(name, results, db_path="crypto_data.duckdb"):
+    """Function for concurrent read testing"""
+    success = 0
+    failures = 0
+    
+    for i in range(5):
         try:
-            import duckdb
-            conn = duckdb.connect(str(db_path), read_only=True)
-            
-            # Get table info
-            tables = conn.execute("SHOW TABLES").fetchall()
-            print(f"  Tables: {[t[0] for t in tables]}")
-            
-            # Get row counts for OHLCV tables
-            for table in tables:
-                if table[0].startswith('ohlcv_'):
-                    count = conn.execute(f"SELECT COUNT(*) FROM {table[0]}").fetchone()[0]
-                    print(f"  {table[0]}: {count:,} rows")
-            
+            conn = duckdb.connect(db_path, read_only=True)
+            conn.execute("SELECT COUNT(*) FROM ohlcv").fetchone()
             conn.close()
-            print(f"{GREEN}  No lock issues{RESET}")
-            
+            success += 1
         except Exception as e:
-            print(f"{RED}  Database locked or error: {e}{RESET}")
-            
-            # Find process holding lock
-            for proc in psutil.process_iter(['pid', 'name']):
-                try:
-                    for file in proc.open_files():
-                        if 'crypto_data.duckdb' in file.path:
-                            print(f"{YELLOW}  Locked by: {proc.info['name']} (PID: {proc.info['pid']}){RESET}")
-                except:
-                    pass
-    else:
-        print(f"{YELLOW}✗ Database does not exist yet{RESET}")
-
-
-def check_last_error():
-    """Check for recent errors in logs"""
-    print(f"\n{BOLD}4. Recent Errors:{RESET}")
-    print("-" * 50)
+            failures += 1
+            print(f"{name}: Read failed - {e}")
+        
+        time.sleep(0.1)
     
-    log_file = Path("processor_debug.log")
-    if log_file.exists():
-        with open(log_file, 'r') as f:
-            lines = f.readlines()
-            
-        errors = [l for l in lines[-100:] if 'ERROR' in l]
-        if errors:
-            print(f"{RED}Found {len(errors)} errors in last 100 log lines:{RESET}")
-            for error in errors[-3:]:  # Show last 3 errors
-                print(f"  {error.strip()}")
-        else:
-            print(f"{GREEN}No recent errors in logs{RESET}")
-    else:
-        print(f"{YELLOW}No debug log file found{RESET}")
-
-
-def show_recommendations(processes):
-    """Show recommendations based on status"""
-    print(f"\n{BOLD}5. Recommendations:{RESET}")
-    print("-" * 50)
-    
-    if not processes['redis']:
-        print(f"{RED}1. Start Redis first:{RESET}")
-        print(f"   redis-server")
-    
-    if not processes['processor']:
-        print(f"{YELLOW}2. Start the data processor:{RESET}")
-        print(f"   python3 run_processor_fixed.py  # (with format fix)")
-        print(f"   # or")
-        print(f"   python3 scripts/run_processor.py")
-    
-    if not processes['websocket']:
-        print(f"{YELLOW}3. Start the WebSocket collector:{RESET}")
-        print(f"   python3 scripts/run_collector.py websocket")
-    
-    if not processes['rest']:
-        print(f"{BLUE}4. (Optional) Start the REST collector:{RESET}")
-        print(f"   python3 scripts/run_collector.py rest")
-    
-    if all(processes.values()):
-        print(f"{GREEN}✓ All services are running!{RESET}")
-        print(f"\nMonitor progress with:")
-        print(f"   python3 monitor_progress.py")
+    results[name] = {'success': success, 'failures': failures}
 
 
 def main():
-    """Main status check"""
-    print(f"{BOLD}=== Crypto Dashboard System Status ==={RESET}")
-    print(f"Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print("=== Testing Concurrent DuckDB Access ===\n")
     
-    # Run checks
-    processes = check_processes()
-    check_redis()
-    check_duckdb()
-    check_last_error()
-    show_recommendations(processes)
+    # Test 1: Basic read-only access
+    print("1. Testing read-only access:")
+    test_read_only_access()
     
-    print(f"\n{BOLD}Quick Commands:{RESET}")
-    print(f"  Kill DuckDB lock:  pkill -f crypto_data.duckdb")
-    print(f"  Clear Redis:       redis-cli FLUSHALL")
-    print(f"  Stop all:          pkill -f crypto-dashboard-modular")
+    # Test 2: Write and release
+    print("\n2. Testing write with immediate release:")
+    test_write_with_release()
+    
+    # Test 3: Concurrent read-only access
+    print("\n3. Testing concurrent read-only access:")
+    
+    # Start a writer that holds connection briefly
+    def writer_process():
+        for i in range(3):
+            conn = duckdb.connect("crypto_data.duckdb")
+            conn.execute(f"INSERT INTO ohlcv (symbol, interval, timestamp, open, high, low, close, volume) VALUES ('TEST{i}', '1m', CURRENT_TIMESTAMP, 100, 101, 99, 100.5, 1000)")
+            conn.close()  # Release immediately
+            print(f"   Writer: Wrote record {i} and released connection")
+            time.sleep(1)
+    
+    # Start writer in thread
+    writer = threading.Thread(target=writer_process)
+    writer.start()
+    
+    # Start multiple readers
+    time.sleep(0.5)  # Let writer start
+    
+    results = {}
+    readers = []
+    for i in range(3):
+        reader = threading.Thread(
+            target=concurrent_reader,
+            args=(f"Reader-{i}", results)
+        )
+        readers.append(reader)
+        reader.start()
+    
+    # Wait for all to complete
+    writer.join()
+    for reader in readers:
+        reader.join()
+    
+    # Show results
+    print("\n4. Concurrent access results:")
+    for name, result in results.items():
+        print(f"   {name}: {result['success']} successful reads, {result['failures']} failures")
+    
+    # Test 4: Connection modes comparison
+    print("\n5. Connection modes comparison:")
+    
+    # Try exclusive write (will block others)
+    print("   a) Exclusive write connection (blocks others):")
+    conn = duckdb.connect("crypto_data.duckdb")
+    print("      - Write connection open")
+    
+    # Try to read while write is open
+    try:
+        read_conn = duckdb.connect("crypto_data.duckdb", read_only=False)
+        print("      - ✗ Another connection succeeded (unexpected)")
+        read_conn.close()
+    except Exception as e:
+        print("      - ✓ Another connection blocked (expected)")
+    
+    # But read-only should work
+    try:
+        read_conn = duckdb.connect("crypto_data.duckdb", read_only=True)
+        print("      - ✓ Read-only connection succeeded")
+        read_conn.close()
+    except Exception as e:
+        print(f"      - ✗ Read-only connection failed: {e}")
+    
+    conn.close()
+    print("      - Write connection closed")
+    
+    print("\n=== Summary ===")
+    print("• Use read_only=True for all read operations")
+    print("• Close write connections immediately after use")
+    print("• Consider batching writes to minimize lock time")
+    print("• The processor should release connections between writes")
 
 
 if __name__ == "__main__":
